@@ -7,7 +7,6 @@ namespace SmartCore\CMSBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\Group;
 use Smart\CoreBundle\Doctrine\ColumnTrait;
 
 /**
@@ -25,7 +24,7 @@ use Smart\CoreBundle\Doctrine\ColumnTrait;
  *      }
  * )
  */
-class UserGroup extends Group
+class UserGroup
 {
     use ColumnTrait\Position;
     use ColumnTrait\TitleNotBlank;
@@ -79,6 +78,20 @@ class UserGroup extends Group
      * @ORM\Column(type="boolean")
      */
     protected $is_default_regions_granted_write;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=false, unique=true)
+     */
+    protected $name;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $roles;
 
     /**
      * @var Permission[]|ArrayCollection
@@ -156,7 +169,8 @@ class UserGroup extends Group
         $this->permissions           = new ArrayCollection();
         $this->position              = 0;
 
-        parent::__construct($name, $roles);
+        $this->name = $name;
+        $this->roles = $roles;
     }
 
     /**
@@ -172,7 +186,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function addPermission(Permission $permission): UserGroup
+    public function addPermission(Permission $permission): self
     {
         if (!$this->permissions->contains($permission)) {
             $this->permissions->add($permission);
@@ -194,7 +208,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setPermissions($permissions): UserGroup
+    public function setPermissions($permissions): self
     {
         $this->permissions = $permissions;
 
@@ -214,7 +228,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setFoldersGrantedRead($folders_granted_read)
+    public function setFoldersGrantedRead($folders_granted_read): self
     {
         $this->folders_granted_read = $folders_granted_read;
 
@@ -234,7 +248,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setFoldersGrantedWrite($folders_granted_write)
+    public function setFoldersGrantedWrite($folders_granted_write): self
     {
         $this->folders_granted_write = $folders_granted_write;
 
@@ -254,7 +268,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setIsDefaultFoldersGrantedRead($is_default_folders_granted_read)
+    public function setIsDefaultFoldersGrantedRead($is_default_folders_granted_read): self
     {
         $this->is_default_folders_granted_read = $is_default_folders_granted_read;
 
@@ -274,7 +288,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setIsDefaultFoldersGrantedWrite($is_default_folders_granted_write)
+    public function setIsDefaultFoldersGrantedWrite($is_default_folders_granted_write): self
     {
         $this->is_default_folders_granted_write = $is_default_folders_granted_write;
 
@@ -294,7 +308,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setIsDefaultNodesGrantedRead($is_default_nodes_granted_read)
+    public function setIsDefaultNodesGrantedRead($is_default_nodes_granted_read): self
     {
         $this->is_default_nodes_granted_read = $is_default_nodes_granted_read;
 
@@ -314,7 +328,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setIsDefaultNodesGrantedWrite($is_default_nodes_granted_write)
+    public function setIsDefaultNodesGrantedWrite($is_default_nodes_granted_write): self
     {
         $this->is_default_nodes_granted_write = $is_default_nodes_granted_write;
 
@@ -334,7 +348,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setNodesGrantedRead($nodes_granted_read)
+    public function setNodesGrantedRead($nodes_granted_read): self
     {
         $this->nodes_granted_read = $nodes_granted_read;
 
@@ -354,7 +368,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setNodesGrantedWrite($nodes_granted_write)
+    public function setNodesGrantedWrite($nodes_granted_write): self
     {
         $this->nodes_granted_write = $nodes_granted_write;
 
@@ -374,7 +388,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setRegionsGrantedRead($regions_granted_read)
+    public function setRegionsGrantedRead($regions_granted_read): self
     {
         $this->regions_granted_read = $regions_granted_read;
 
@@ -394,7 +408,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setRegionsGrantedWrite($regions_granted_write)
+    public function setRegionsGrantedWrite($regions_granted_write): self
     {
         $this->regions_granted_write = $regions_granted_write;
 
@@ -414,7 +428,7 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setIsDefaultRegionsGrantedRead($is_default_regions_granted_read)
+    public function setIsDefaultRegionsGrantedRead($is_default_regions_granted_read): self
     {
         $this->is_default_regions_granted_read = $is_default_regions_granted_read;
 
@@ -434,9 +448,96 @@ class UserGroup extends Group
      *
      * @return $this
      */
-    public function setIsDefaultRegionsGrantedWrite($is_default_regions_granted_write)
+    public function setIsDefaultRegionsGrantedWrite($is_default_regions_granted_write): self
     {
         $this->is_default_regions_granted_write = $is_default_regions_granted_write;
+
+        return $this;
+    }
+
+    /**
+     * @param string $role
+     *
+     * @return $this
+     */
+    public function addRole(string $role): self
+    {
+        if (!$this->hasRole($role)) {
+            $this->roles[] = strtoupper($role);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        return in_array(strtoupper($role), $this->roles, true);
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getRoles(): ?array
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param string $role
+     *
+     * @return $this
+     */
+    public function removeRole(string $role): self
+    {
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @param array $roles
+     *
+     * @return $this
+     */
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
