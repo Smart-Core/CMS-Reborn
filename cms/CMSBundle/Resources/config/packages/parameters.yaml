@@ -1,0 +1,5 @@
+parameters:
+    admin_path: admin
+    admin_role: ROLE_ADMIN
+    api_path: api
+    #locale: 'ru'

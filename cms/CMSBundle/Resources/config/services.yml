@@ -1,0 +1,18 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    SmartCore\CMSBundle\:
+        resource: '../../*'
+        exclude: '../../{DependencyInjection,Entity,Resources,Tests,CMSBundle.php}'
+
+    SmartCore\CMSBundle\Controller\:
+        resource: '../../Controller'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags: ['controller.service_arguments']
+
+#    SmartCore\CMSBundle\Command\:
+#        resource: '../../Command'

@@ -37,6 +37,12 @@ class Kernel extends BaseKernel
         $container->setParameter('container.dumper.inline_factories', true);
         $confDir = $this->getProjectDir().'/config';
 
+        // Загрузка конфигов CMS.
+        $confDirCms = $this->getBundle('CMSBundle')->getPath().'/Resources/config';
+        $loader->load($confDirCms.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
+        $loader->load($confDirCms.'/{packages}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
+
+        // Потом конфиги приложения.
         $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
         $loader->load($confDir.'/{packages}/'.$this->environment.'/*'.self::CONFIG_EXTS, 'glob');
         $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
