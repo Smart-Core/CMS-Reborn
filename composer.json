@@ -52,6 +52,7 @@
         "psr-4": {
             "App\\": "src/",
             "SmartCore\\": "smart-core/",
+            "SmartCore\\Bundle\\HtmlBundle\\": "smart-core/HtmlBundle/",
             "SmartCore\\Bundle\\MediaBundle\\": "smart-core/MediaBundle/",
             "SmartCore\\Bundle\\SettingsBundle\\": "smart-core/SettingsBundle/",
             "Smart\\CoreBundle\\": "smart-core/CoreBundle/"

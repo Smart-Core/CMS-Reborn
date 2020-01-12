@@ -1,0 +1,18 @@
+services:
+    html:
+        class: SmartCore\Bundle\HtmlBundle\Html
+        public: true
+    SmartCore\Bundle\HtmlBundle\Html:
+        alias: html
+
+    html.tidy:
+        class: SmartCore\Bundle\HtmlBundle\Service\TidyService
+        public: true
+    SmartCore\Bundle\HtmlBundle\Service\TidyService:
+        alias: html.tidy
+
+    smart.html.twig.extension:
+        class: SmartCore\Bundle\HtmlBundle\Twig\HtmlExtension
+        arguments: [ '@html' ]
+        tags:
+            - { name: twig.extension }
