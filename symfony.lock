@@ -153,6 +153,9 @@
             "./config/packages/security_checker.yaml"
         ]
     },
+    "smart-core/db-dumper-bundle": {
+        "version": "dev-master"
+    },
     "symfony/asset": {
         "version": "v4.4.2"
     },
