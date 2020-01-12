@@ -18,21 +18,16 @@ class MediaCloudService
 {
     use ContainerAwareTrait;
 
+    /** @var array */
     protected $config;
 
-    /**
-     * @var EntityManager
-     */
+    /** @var EntityManager */
     protected $em;
 
-    /**
-     * @var MediaCollection[]
-     */
+    /** @var MediaCollection[] */
     protected $collections;
 
-    /**
-     * @var MediaStorage[]
-     */
+    /** @var MediaStorage[] */
     protected $storages;
 
     /**
@@ -44,87 +39,10 @@ class MediaCloudService
      */
     public function __construct(ContainerInterface $container, EntityManagerInterface $em, array $config)
     {
-        $this->config = $config;
-
-        // storages
-        foreach ($config['storages'] as $name => $val) {
-            $ms = new MediaStorage();
-            $ms->setCode($val['code'])
-                ->setTitle($val['title'])
-                ->setRelativePath($val['relative_path'])
-                ->setArguments($val['arguments'])
-                ->setProviderClass($val['provider'])
-                ->setContainer($container)
-            ;
-
-            $this->storages[$val['code']] = $ms;
-        }
-
-        try {
-            $dbStorages = $em->getRepository(Storage::class)->findAll();
-
-            foreach ($dbStorages as $dbStorage) {
-                if (isset($this->storages[$dbStorage->getCode()])) {
-                    throw new \Exception('Storage with code "'.$dbStorage->getCode().'" is already exist');
-                }
-
-                $s = new MediaStorage();
-                $s->setCode($dbStorage->getCode())
-                    ->setTitle($dbStorage->getTitle())
-                    ->setRelativePath($dbStorage->getRelativePath())
-                    ->setProviderClass($dbStorage->getProvider())
-                    ->setArguments($dbStorage->getArguments())
-                    ->setContainer($container)
-                ;
-
-                $this->storages[$dbStorage->getCode()] = $s;
-            }
-        } catch (TableNotFoundException $e) {
-            // @todo
-        }
-
-        // collections
-        foreach ($config['collections'] as $name => $val) {
-            $mc = new MediaCollection($container);
-            $mc->setCode($val['code'])
-                ->setTitle($val['title'])
-                ->setRelativePath($val['relative_path'])
-                ->setDefaultFilter($val['default_filter'])
-                ->setUploadFilter($val['upload_filter'])
-                ->setFilenamePattern($val['filename_pattern'])
-                ->setFileRelativePathPattern($val['file_relative_path_pattern'])
-                ->setStorage($this->storages[$val['storage']])
-            ;
-
-            $this->collections[$val['code']] = $mc;
-        }
-
-        try {
-            $dbCollections = $em->getRepository(Collection::class)->findAll();
-            foreach ($dbCollections as $dbCollection) {
-                if (isset($this->collections[$dbCollection->getCode()])) {
-                    throw new \Exception('Collection with code "'.$dbCollection->getCode().'" is already exist');
-                }
-
-                $mc = new MediaCollection($container);
-                $mc->setCode($dbCollection->getCode())
-                    ->setTitle($dbCollection->getTitle())
-                    ->setRelativePath($dbCollection->getRelativePath())
-                    ->setDefaultFilter($dbCollection->getDefaultFilter())
-                    ->setUploadFilter($dbCollection->getUploadFilter())
-                    ->setFilenamePattern($dbCollection->getFilenamePattern())
-                    ->setFileRelativePathPattern($dbCollection->getFileRelativePathPattern())
-                    ->setStorage($this->storages[$dbCollection->getStorage()->getCode()])
-                ;
-
-                $this->collections[$dbCollection->getCode()] = $mc;
-            }
-        } catch (TableNotFoundException $e) {
-            // @todo
-        }
-
-        $this->container = $container;
-        $this->em        = $em;
+        $this->collections  = null;
+        $this->config       = $config;
+        $this->container    = $container;
+        $this->em           = $em;
     }
 
     /**
@@ -144,7 +62,7 @@ class MediaCloudService
      */
     public function getCollection($code = null)
     {
-        return $this->collections[$code];
+        return $this->getCollections()[$code];
     }
 
     /**
@@ -210,6 +128,91 @@ class MediaCloudService
      */
     public function getCollections(): array
     {
+        if (is_array($this->collections)) {
+            return $this->collections;
+        }
+
+        $config = $this->config;
+
+        // storages
+        $this->storages = [];
+        foreach ($config['storages'] as $name => $val) {
+            $ms = new MediaStorage();
+            $ms->setCode($val['code'])
+                ->setTitle($val['title'])
+                ->setRelativePath($val['relative_path'])
+                ->setArguments($val['arguments'])
+                ->setProviderClass($val['provider'])
+                ->setContainer($this->container)
+            ;
+
+            $this->storages[$val['code']] = $ms;
+        }
+
+        try {
+            $dbStorages = $this->em->getRepository(Storage::class)->findAll();
+
+            foreach ($dbStorages as $dbStorage) {
+                if (isset($this->storages[$dbStorage->getCode()])) {
+                    throw new \Exception('Storage with code "'.$dbStorage->getCode().'" is already exist');
+                }
+
+                $s = new MediaStorage();
+                $s->setCode($dbStorage->getCode())
+                    ->setTitle($dbStorage->getTitle())
+                    ->setRelativePath($dbStorage->getRelativePath())
+                    ->setProviderClass($dbStorage->getProvider())
+                    ->setArguments($dbStorage->getArguments())
+                    ->setContainer($this->container)
+                ;
+
+                $this->storages[$dbStorage->getCode()] = $s;
+            }
+        } catch (TableNotFoundException $e) {
+            // @todo
+        }
+
+        // collections
+        $this->collections = [];
+        foreach ($config['collections'] as $name => $val) {
+            $mc = new MediaCollection($this->container);
+            $mc->setCode($val['code'])
+                ->setTitle($val['title'])
+                ->setRelativePath($val['relative_path'])
+                ->setDefaultFilter($val['default_filter'])
+                ->setUploadFilter($val['upload_filter'])
+                ->setFilenamePattern($val['filename_pattern'])
+                ->setFileRelativePathPattern($val['file_relative_path_pattern'])
+                ->setStorage($this->storages[$val['storage']])
+            ;
+
+            $this->collections[$val['code']] = $mc;
+        }
+
+        try {
+            $dbCollections = $this->em->getRepository(Collection::class)->findAll();
+            foreach ($dbCollections as $dbCollection) {
+                if (isset($this->collections[$dbCollection->getCode()])) {
+                    throw new \Exception('Collection with code "'.$dbCollection->getCode().'" is already exist');
+                }
+
+                $mc = new MediaCollection($this->container);
+                $mc->setCode($dbCollection->getCode())
+                    ->setTitle($dbCollection->getTitle())
+                    ->setRelativePath($dbCollection->getRelativePath())
+                    ->setDefaultFilter($dbCollection->getDefaultFilter())
+                    ->setUploadFilter($dbCollection->getUploadFilter())
+                    ->setFilenamePattern($dbCollection->getFilenamePattern())
+                    ->setFileRelativePathPattern($dbCollection->getFileRelativePathPattern())
+                    ->setStorage($this->storages[$dbCollection->getStorage()->getCode()])
+                ;
+
+                $this->collections[$dbCollection->getCode()] = $mc;
+            }
+        } catch (TableNotFoundException $e) {
+            // @todo
+        }
+
         return $this->collections;
     }
 
