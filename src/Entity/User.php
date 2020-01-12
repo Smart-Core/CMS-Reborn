@@ -55,23 +55,11 @@ class User extends UserModel
     protected $lastname;
 
     /**
-     * @var UserGroup[]|ArrayCollection
-     *
-     * ORM\ManyToMany(targetEntity="UserGroup")
-     * ORM\JoinTable(name="users_groups_relations")
-     */
-    protected $groups;
-
-    /**
      * User constructor.
      */
     public function __construct()
     {
-        $this->email        = '';
-        $this->groups       = new ArrayCollection();
-        $this->password     = '';
-        $this->roles        = [];
-        $this->username     = '';
+        parent::__construct();
     }
 
     /**
@@ -85,27 +73,6 @@ class User extends UserModel
 
         return $this->getFirstname().' '.$this->getLastname();
     }
-
-    /**
-     * Является ли юзер действующим участником какого-либо кооператива?
-     *
-     * @return bool
-     */
-    public function isMember(): bool
-    {
-        foreach ($this->members as $member) {
-            if ($member->getStatus() == CooperativeMember::STATUS_PENDING_ASSOC
-                or $member->getStatus() == CooperativeMember::STATUS_PENDING_REAL
-            ) {
-                // pending
-            } else {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
 
     /**
      * @return string|null

@@ -1,26 +1,7 @@
 
 cms_controllers_admin:
-    resource: '../../../Controller/Admin/'
-    type: annotation
+    resource: 'routing_admin.yml'
     prefix: /%admin_path%/
-    #prefix: /%admin_path%/system/
-    #name_prefix: cms_admin.
 
-#admin_settings:
-#    resource: '@SmartSettingsBundle/Resources/config/routing.yml'
-    #prefix: /%admin_path%/system/config/
-#    prefix: /%admin_path%/config/
-
-#module_admin_routes_annotation:
-#    resource: .
-#    type: module_admin_annotation
-#    prefix: /%admin_path%/
-
-cms_controllers:
-    resource: '../../../Controller/*'
-    type: annotation
-
-# Эти маршруты нужны для генерации ссылок к модулям с учетом пути, куда они подключены.
-#cms_modules:
-#    resource: .
-#    type: modules_annotation
+cms_controllers_frontend:
+    resource: 'routing_frontend.yml'

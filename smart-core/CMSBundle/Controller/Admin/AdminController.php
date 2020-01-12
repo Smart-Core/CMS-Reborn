@@ -16,7 +16,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/", name="cms_admin.index", methods={"GET"})
+     * @Route("/", name="cms_admin.index")
      */
     public function index(SecurityManager $securityManager, AuthenticationUtils $helper): Response
     {
@@ -32,6 +32,19 @@ class AdminController extends AbstractController
         return $this->render('@CMS/Admin/dashboard.html.twig', [
             //'controller_name' => 'Admin Controller:'.$slug,
         ]);
+    }
+
+    /**
+     * This is the route the user can use to logout.
+     *
+     * But, this will never be executed. Symfony will intercept this first
+     * and handle the logout automatically. See logout in config/packages/security.yaml
+     *
+     * @Route("/logout", name="cms_admin.logout")
+     */
+    public function logout(): void
+    {
+        throw new \Exception('This should never be reached!');
     }
 
     /**

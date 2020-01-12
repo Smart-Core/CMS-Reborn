@@ -7,6 +7,7 @@ namespace SmartCore\CMSBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Smart\CoreBundle\Doctrine\ColumnTrait;
+use SmartCore\CMSBundle\Entity\UserGroup;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -99,13 +100,25 @@ abstract class UserModel implements UserInterface
     protected $last_login;
 
     /**
+     * @var UserGroup[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="SmartCore\CMSBundle\Entity\UserGroup")
+     * @ORM\JoinTable(name="users_groups_relations")
+     */
+    protected $groups;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->created_at   = new \DateTime();
         $this->is_enabled   = false;
-
+        $this->email        = '';
+        $this->groups       = new ArrayCollection();
+        $this->password     = '';
+        $this->roles        = [];
+        $this->username     = '';
     }
 
     /**
@@ -481,5 +494,4 @@ abstract class UserModel implements UserInterface
 
         return $this;
     }
-
 }
