@@ -9,6 +9,7 @@
         "ext-gd": "*",
         "ext-iconv": "*",
         "ext-intl": "*",
+        "liip/imagine-bundle": "*",
         "sensio/framework-extra-bundle": "^5.1",
         "sensiolabs/security-checker": "^6.0",
         "smart-core/db-dumper-bundle": "dev-master",
@@ -51,6 +52,8 @@
         "psr-4": {
             "App\\": "src/",
             "SmartCore\\": "smart-core/",
+            "SmartCore\\Bundle\\MediaBundle\\": "smart-core/MediaBundle/",
+            "SmartCore\\Bundle\\SettingsBundle\\": "smart-core/SettingsBundle/",
             "Smart\\CoreBundle\\": "smart-core/CoreBundle/"
         }
     },
