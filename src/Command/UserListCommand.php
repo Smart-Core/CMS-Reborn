@@ -29,7 +29,7 @@ class UserListCommand extends Command
     }
 
     /**
-     * WitnessListCommand constructor.
+     * UserListCommand constructor.
      *
      * @param EntityManagerInterface $em
      */
