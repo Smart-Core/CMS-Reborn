@@ -1,0 +1,35 @@
+{
+    "name": "smart-core/cms-bundle",
+    "description": "Smart Core CMS Bundle",
+    "keywords": ["cmf", "cms", "bundle", "symfony", "symfony4"],
+    "type": "symfony-bundle",
+    "require": {
+        "php": ">=7.3.0",
+        "ext-ctype": "*",
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-iconv": "*",
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-xml": "*",
+        "cache/cache-bundle": "^1.1",
+        "knplabs/knp-menu-bundle": "^3.0",
+        "liip/theme-bundle": "^1.0",
+        "sonata-project/intl-bundle": "^2.6",
+        "symfony/expression-language": "^4.2",
+        "twig/intl-extra": "^3.0",
+        "white-october/pagerfanta-bundle": "^1.0"
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "autoload": {
+        "psr-4": {
+            "SmartCore\\CMSBundle\\": ""
+        },
+        "files": [
+            "Doctrine/ORM/Utility/IdentifierFlattener.php"
+        ]
+    }
+}

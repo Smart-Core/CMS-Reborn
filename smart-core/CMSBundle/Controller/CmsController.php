@@ -35,9 +35,9 @@ use Twig\Error\LoaderError;
 class CmsController extends AbstractController
 {
     /**
-     * @Route("/{slug<.+>}", name="cms_index", methods={"GET"})
+     * @Route("/{slug<.+>}", name="cms_main", methods={"GET"})
      */
-    public function index(
+    public function main(
         KernelInterface $kernel,
         Request $request,
         string $slug = '',
