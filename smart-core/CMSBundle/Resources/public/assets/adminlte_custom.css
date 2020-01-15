@@ -1,5 +1,71 @@
+a {
+  color: #337ab7;
+}
+a:hover {
+  color: #23527c;
+  text-decoration: underline;
+}
+.login-logo a {
+  text-decoration: none;
+}
+
 .brand-link .brand-image {
   margin-left: 0.3rem !important;
+}
+
+.cms-site-switcher {
+  margin: 14px;
+  color: #b8c7ce;
+}
+
+.cms-site-switcher select {
+  width: 150px;
+  color: black;
+}
+
+.cms-site-switcher option[selected=selected] {
+  color: blue;
+  font-weight: bold;
+}
+
+.clear {
+  clear: both;
+}
+.content-wrapper {
+  background: #efefef;
+}
+
+.form-button {
+  margin: 3px 0px 5px 20px;
+  float: left;
+}
+.form-horizontal {
+  margin: 5px 0 5px;
+}
+.form-horizontal .control-group {
+  margin-bottom: 12px;
+}
+.form-horizontal .control-label {
+  float: left;
+  width: 200px;
+  padding-right: 5px;
+}
+.form-horizontal .controls {
+  margin-left: 210px;
+}
+.form-horizontal option[selected=selected],
+.form-control option[selected=selected] {
+  color: blue;
+  font-weight: bold;
+}
+.form-vertical .checkbox {
+  margin-left: 0;
+}
+.form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6) !important;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6) !important;
 }
 
 @media (min-width: 992px) {
@@ -13,9 +79,6 @@
   }
 }
 
-.content-wrapper {
-  background: #efefef;
-}
 
 /*
 .navbar-fixed-top,

@@ -29,22 +29,30 @@
 {% block body %}
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ path('cms_main') }}"><b>Smart Core</b> CMS</a>
+            {{ 'Admin Panel'|trans }}
+            <br>
+            <a href="{{ path('cms_main') }}"><b>Smart Core CMS</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg">{{ 'Sign in to start your session'|trans }}</p>
 
                 <form class="form-signin" method="post">
                     <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey }}
+                        </div>
+                    {% endif %}
+
                     <div class="input-group mb-3">
                         <input type="text" id="inputUsername" class="form-control" placeholder="{{ 'Username'|trans }}" name="_username" required autofocus>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-user"></span>
                             </div>
                         </div>
                     </div>
@@ -58,22 +66,22 @@
                     </div>
 
                     <div class="row">
-{#
+
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
+                                <input type="checkbox" id="remember" name="_remember_me">
                                 <label for="remember">
-                                    Remember Me
+                                    {{ 'Remember Me'|trans }}
                                 </label>
                             </div>
                         </div>
                         <!-- /.col -->
-#}
-                        <div class="col-2"></div>
-                        <div class="col-8">
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'Sign in'|trans }}</button>
+
+{#                        <div class="col-3"></div>#}
+                        <div class="col-4">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'Login'|trans }}</button>
                         </div>
-                        <div class="col-2"></div>
+{#                        <div class="col-3"></div>#}
                         <!-- /.col -->
                     </div>
                 </form>
