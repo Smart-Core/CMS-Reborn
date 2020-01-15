@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
- * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="cms_regions",
  *      indexes={
  *          @ORM\Index(columns={"position"}),
@@ -23,6 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  * @UniqueEntity(fields={"name", "site"}, message="Регион с таким именем уже используется")
+ * @ORM\HasLifecycleCallbacks
  */
 class Region
 {

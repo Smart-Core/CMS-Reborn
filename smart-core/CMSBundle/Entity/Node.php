@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="SmartCore\CMSBundle\Repository\NodeRepository")
- * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="cms_nodes",
  *      indexes={
  *          @ORM\Index(columns={"is_active"}),
@@ -23,6 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\Index(columns={"module"})
  *      }
  * )
+ * @ORM\HasLifecycleCallbacks
  */
 class Node implements \Serializable // NodeInterface @todo
 {

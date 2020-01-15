@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Smart\CoreBundle\Doctrine\ColumnTrait;
 
 /**
- * @ORM\Entity(repositoryClass="FileTransformedRepository")
+ * @ORM\Entity(repositoryClass="SmartCore\Bundle\MediaBundle\Repository\FileTransformedRepository")
  * @ORM\Table(name="media_files_transformed",
  *      indexes={
  *          @ORM\Index(columns={"collection"}),

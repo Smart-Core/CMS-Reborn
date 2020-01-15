@@ -9,7 +9,7 @@ use Smart\CoreBundle\Doctrine\ColumnTrait;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\Entity(repositoryClass="FileRepository")
+ * @ORM\Entity(repositoryClass="SmartCore\Bundle\MediaBundle\Repository\FileRepository")
  * @ORM\Table(name="media_files",
  *      indexes={
  *          @ORM\Index(columns={"collection"}),

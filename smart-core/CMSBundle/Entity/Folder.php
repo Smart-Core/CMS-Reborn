@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="SmartCore\CMSBundle\Repository\FolderRepository")
- * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="cms_folders",
  *      indexes={
  *          @ORM\Index(columns={"is_active"}),
@@ -25,6 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  * @UniqueEntity(fields={"uri_part", "parent_folder"}, message="в каждой подпапке должен быть уникальный сегмент URI")
+ * @ORM\HasLifecycleCallbacks
  */
 class Folder
 {
