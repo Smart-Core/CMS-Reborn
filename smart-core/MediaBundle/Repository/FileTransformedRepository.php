@@ -1,17 +1,29 @@
 <?php
 
-namespace SmartCore\Bundle\MediaBundle\Entity;
+namespace SmartCore\Bundle\MediaBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use SmartCore\Bundle\MediaBundle\Entity\FileTransformed;
 
-class FileRepository extends EntityRepository
+class FileTransformedRepository extends EntityRepository
 {
     /**
-     * @param string $collection
+     * FileTransformedRepository constructor.
+     *
+     * @param ManagerRegistry $registry
+     */
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, FileTransformed::class);
+    }
+
+    /**
+     * @param Collection|int $collection
      *
      * @return int
      */
-    public function countByCollection(string $collection)
+    public function countByCollection($collection)
     {
         $qb = $this->createQueryBuilder('e')
             ->select('count(e.id)')
@@ -23,11 +35,11 @@ class FileRepository extends EntityRepository
     }
 
     /**
-     * @param string $collection
+     * @param Collection|int $collection
      *
      * @return int
      */
-    public function summarySize(string $collection)
+    public function summarySize($collection)
     {
         $qb = $this->createQueryBuilder('e')
             ->select('sum(e.size)')
