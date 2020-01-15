@@ -1431,16 +1431,16 @@
         },
         {
             "name": "doctrine/persistence",
-            "version": "1.3.4",
+            "version": "1.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/persistence.git",
-                "reference": "ff7e08b0f814be2cd20c52dc3c8a262579376b94"
+                "reference": "be70c016fdcd44a428405ee062ebcdd01a6867cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/persistence/zipball/ff7e08b0f814be2cd20c52dc3c8a262579376b94",
-                "reference": "ff7e08b0f814be2cd20c52dc3c8a262579376b94",
+                "url": "https://api.github.com/repos/doctrine/persistence/zipball/be70c016fdcd44a428405ee062ebcdd01a6867cd",
+                "reference": "be70c016fdcd44a428405ee062ebcdd01a6867cd",
                 "shasum": ""
             },
             "require": {
@@ -1510,7 +1510,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2020-01-09T19:49:17+00:00"
+            "time": "2020-01-14T18:44:12+00:00"
         },
         {
             "name": "doctrine/reflection",
@@ -2794,12 +2794,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Smart-Core/FelibBundle.git",
-                "reference": "b63feba4edaa4f59e14517cc3be8823cb5259833"
+                "reference": "50a2c4ba37623579ae62dd18e10fcddbca4148f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Smart-Core/FelibBundle/zipball/b63feba4edaa4f59e14517cc3be8823cb5259833",
-                "reference": "b63feba4edaa4f59e14517cc3be8823cb5259833",
+                "url": "https://api.github.com/repos/Smart-Core/FelibBundle/zipball/50a2c4ba37623579ae62dd18e10fcddbca4148f3",
+                "reference": "50a2c4ba37623579ae62dd18e10fcddbca4148f3",
                 "shasum": ""
             },
             "require": {
@@ -2820,7 +2820,7 @@
             ],
             "description": "Font-End Library Managment Bundle",
             "homepage": "http://smart-core.org",
-            "time": "2019-05-19T18:32:03+00:00"
+            "time": "2020-01-15T09:21:08+00:00"
         },
         {
             "name": "symfony/asset",
