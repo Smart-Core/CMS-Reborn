@@ -4,7 +4,7 @@
     "keywords": ["cmf", "cms", "bundle", "symfony", "symfony4"],
     "type": "symfony-bundle",
     "require": {
-        "php": ">=7.3.0",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-curl": "*",
         "ext-dom": "*",

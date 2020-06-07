@@ -24,37 +24,28 @@ class Storage
     /**
      * Уникальный код хранилища
      *
-     * @var string
-     *
      * @ORM\Column(type="string", length=2, nullable=false, unique=true)
      */
-    protected $code;
+    protected string $code;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=190)
      */
-    protected $relative_path;
+    protected string $relative_path;
 
     /**
      * @var string instanceof ProviderInterface
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=190, nullable=false)
      */
-    protected $provider;
+    protected string $provider;
 
     /**
-     * @var array
-     *
      * @ORM\Column(type="array")
      */
-    protected $arguments;
+    protected array $arguments;
 
-    /**
-     * @param string $relativePath
-     */
-    public function __construct($relativePath = '')
+    public function __construct(string $relativePath = '')
     {
         $this->created_at       = new \DateTime();
         $this->relative_path    = $relativePath;
@@ -65,49 +56,9 @@ class Storage
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->title;
-    }
-
-    /**
-     * @param string $relative_path
-     *
-     * @return $this
-     */
-    public function setRelativePath($relative_path)
-    {
-        $this->relative_path = $relative_path;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRelativePath()
-    {
-        return $this->relative_path;
-    }
-
-    /**
-     * @return array
-     */
-    public function getArguments(): ?array
-    {
-        return $this->arguments;
-    }
-
-    /**
-     * @param array $arguments
-     *
-     * @return $this
-     */
-    public function setArguments(array $arguments): self
-    {
-        $this->arguments = $arguments;
-
-        return $this;
     }
 
     /**
@@ -131,11 +82,39 @@ class Storage
     }
 
     /**
+     * @return string
+     */
+    public function getRelativePath(): string
+    {
+        return $this->relative_path;
+    }
+
+    /**
+     * @param string $relative_path
+     *
+     * @return $this
+     */
+    public function setRelativePath(string $relative_path): self
+    {
+        $this->relative_path = $relative_path;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProvider(): string
+    {
+        return $this->provider;
+    }
+
+    /**
      * @param string $provider
      *
      * @return $this
      */
-    public function setProvider($provider)
+    public function setProvider(string $provider): self
     {
         $this->provider = $provider;
 
@@ -143,10 +122,22 @@ class Storage
     }
 
     /**
-     * @return ProviderInterface
+     * @return array
      */
-    public function getProvider()
+    public function getArguments(): array
     {
-        return $this->provider;
+        return $this->arguments;
+    }
+
+    /**
+     * @param array $arguments
+     *
+     * @return $this
+     */
+    public function setArguments(array $arguments): self
+    {
+        $this->arguments = $arguments;
+
+        return $this;
     }
 }

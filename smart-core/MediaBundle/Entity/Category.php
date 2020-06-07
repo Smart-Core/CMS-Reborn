@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartCore\Bundle\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +12,7 @@ use SmartCore\RadBundle\Doctrine\ColumnTrait;
  * @ORM\Entity
  * @ORM\Table(name="media_categories",
  *      indexes={
- *          @ORM\Index(columns={"slug"})
+ *          @ORM\Index(columns={"title"})
  *      }
  * )
  */
@@ -19,6 +21,7 @@ class Category
     use ColumnTrait\Id;
     use ColumnTrait\CreatedAt;
     use ColumnTrait\Title;
+    use ColumnTrait\Slug32;
 
     /**
      * @var Category
@@ -37,13 +40,6 @@ class Category
     protected $children;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=32)
-     */
-    protected $slug;
-
-    /**
      * @var File[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="File", mappedBy="category", fetch="EXTRA_LAZY")
@@ -57,25 +53,5 @@ class Category
     {
         $this->created_at = new \DateTime();
         $this->files      = new ArrayCollection();
-    }
-
-    /**
-     * @param string $slug
-     *
-     * @return $this
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
     }
 }

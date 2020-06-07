@@ -6,10 +6,11 @@ namespace SmartCore\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use SmartCore\RadBundle\Doctrine\ColumnTrait;
+use SmartCore\Bundle\MediaBundle\Repository\FileRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\Entity(repositoryClass="SmartCore\Bundle\MediaBundle\Repository\FileRepository")
+ * @ORM\Entity(repositoryClass="FileRepository::class")
  * @ORM\Table(name="media_files",
  *      indexes={
  *          @ORM\Index(columns={"collection"}),
@@ -22,91 +23,72 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class File
 {
+//    use ColumnTrait\Uuid;
     use ColumnTrait\Id;
     use ColumnTrait\CreatedAt;
     use ColumnTrait\Description;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=36, nullable=true)
      */
-    protected $userId;
+    protected ?string $userId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=2)
      */
-    protected $collection;
+    protected string $collection;
 
     /**
-     * @var Category
-     *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="files")
+     * @ORM\JoinColumn(nullable=false)
      */
-    protected $category;
+    protected Category $category;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=2)
      */
-    protected $storage;
+    protected string $storage;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    protected $relative_path;
+    protected ?string $relative_path;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
-    protected $filename;
+    protected string $filename;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=190, nullable=false)
      */
-    protected $original_filename;
+    protected string $original_filename;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=8)
+     * @ORM\Column(type="string", length=8, nullable=true)
      */
-    protected $type;
+    protected ?string $type;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
-    protected $mime_type;
+    protected string $mime_type;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $original_size;
+    protected int $original_size;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $size;
+    protected int $size;
 
     /**
      * @var FileTransformed[]
      *
-     * @ORM\OneToMany(targetEntity="FileTransformed", mappedBy="file", cascade={"persist"}, fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="FileTransformed", mappedBy="file", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $filesTransformed;
 
@@ -123,7 +105,7 @@ class File
     public function __construct(\Symfony\Component\HttpFoundation\File\File $uploadedFile = null)
     {
         $this->created_at   = new \DateTime();
-        $this->storage      = null;
+        $this->storage      = '';
 
         if ($uploadedFile) {
             $this->uploadedFile = $uploadedFile;

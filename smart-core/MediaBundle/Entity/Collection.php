@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartCore\Bundle\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,69 +23,53 @@ class Collection
     /**
      * Уникальный код коллекции
      *
-     * @var string
-     *
      * @ORM\Column(type="string", length=2, nullable=false, unique=true)
      */
-    protected $code;
+    protected string $code;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $default_filter;
+    protected ?string $default_filter;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $upload_filter;
+    protected ?string $upload_filter;
 
     /**
-     * @var array
-     *
      * @ORM\Column(type="array")
      *
      * @deprecated
      */
-    protected $params;
+    protected ?array $params;
 
     /**
-     * @var Storage
-     *
      * @ORM\ManyToOne(targetEntity="Storage", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    protected $storage;
+    protected Storage $storage;
 
     /**
      * Относительный путь можно менять, только если нету файлов в коллекции
      * либо предусмотреть как-то переименовывание пути в провайдере.
      *
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=190, nullable=false)
      */
-    protected $relative_path;
+    protected string $relative_path;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=190, nullable=false)
      */
-    protected $file_relative_path_pattern;
+    protected string $file_relative_path_pattern;
 
     /**
      * Маска имени файла. Если пустая строка, то использовать оригинальное имя файла,
      * совместимое с вебформатом т.е. без пробелов и русских букв.
      *
-     * @var string
-     *
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, nullable=false)
      */
-    protected $filename_pattern;
+    protected string $filename_pattern;
 
     /**
      * @param string $relativePath
@@ -100,7 +86,7 @@ class Collection
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->title;
     }
@@ -126,106 +112,6 @@ class Collection
     }
 
     /**
-     * @param string $default_filter
-     *
-     * @return $this
-     */
-    public function setDefaultFilter($default_filter)
-    {
-        $this->default_filter = $default_filter;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultFilter()
-    {
-        return $this->default_filter;
-    }
-
-    /**
-     * @param array|null $params
-     *
-     * @return $this
-     */
-    public function setParams(array $params = null)
-    {
-        $this->params = $params;
-
-        return $this;
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getParams()
-    {
-        return $this->params;
-    }
-
-    /**
-     * @param string $file_relative_path_pattern
-     *
-     * @return $this
-     */
-    public function setFileRelativePathPattern($file_relative_path_pattern)
-    {
-        $this->file_relative_path_pattern = $file_relative_path_pattern;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFileRelativePathPattern()
-    {
-        return $this->file_relative_path_pattern;
-    }
-
-    /**
-     * @param string $filename_pattern
-     *
-     * @return $this
-     */
-    public function setFilenamePattern($filename_pattern)
-    {
-        $this->filename_pattern = $filename_pattern;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFilenamePattern()
-    {
-        return $this->filename_pattern;
-    }
-
-    /**
-     * @param string $relative_path
-     *
-     * @return $this
-     */
-    public function setRelativePath($relative_path)
-    {
-        $this->relative_path = $relative_path;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRelativePath()
-    {
-        return $this->relative_path;
-    }
-
-    /**
      * @return string
      */
     public function getCode(): string
@@ -248,6 +134,26 @@ class Collection
     /**
      * @return string|null
      */
+    public function getDefaultFilter(): ?string
+    {
+        return $this->default_filter;
+    }
+
+    /**
+     * @param string|null $default_filter
+     *
+     * @return $this
+     */
+    public function setDefaultFilter(?string $default_filter): self
+    {
+        $this->default_filter = $default_filter;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getUploadFilter(): ?string
     {
         return $this->upload_filter;
@@ -261,6 +167,86 @@ class Collection
     public function setUploadFilter(?string $upload_filter): self
     {
         $this->upload_filter = $upload_filter;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getParams(): ?array
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param array|null $params
+     *
+     * @return $this
+     */
+    public function setParams(?array $params): self
+    {
+        $this->params = $params;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRelativePath(): string
+    {
+        return $this->relative_path;
+    }
+
+    /**
+     * @param string $relative_path
+     *
+     * @return $this
+     */
+    public function setRelativePath(string $relative_path): self
+    {
+        $this->relative_path = $relative_path;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileRelativePathPattern(): string
+    {
+        return $this->file_relative_path_pattern;
+    }
+
+    /**
+     * @param string $file_relative_path_pattern
+     *
+     * @return $this
+     */
+    public function setFileRelativePathPattern(string $file_relative_path_pattern): self
+    {
+        $this->file_relative_path_pattern = $file_relative_path_pattern;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilenamePattern(): string
+    {
+        return $this->filename_pattern;
+    }
+
+    /**
+     * @param string $filename_pattern
+     *
+     * @return $this
+     */
+    public function setFilenamePattern(string $filename_pattern): self
+    {
+        $this->filename_pattern = $filename_pattern;
 
         return $this;
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SmartCore\CMSBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use SmartCore\RadBundle\Doctrine\ColumnTrait;
 use SmartCore\CMSBundle\Entity\UserGroup;
@@ -39,68 +40,51 @@ abstract class UserModel implements UserInterface
     use ColumnTrait\IsEnabled;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=40)
+     * @ORM\Column(type="string", length=40, nullable=false)
      * @Assert\Length(min = 3, minMessage = "Username length must be at least {{ limit }} characters long")
      * @Assert\NotNull(message="This value is not valid.")
      */
-    protected $username;
+    protected string $username;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=40, unique=true)
+     * @ORM\Column(type="string", length=40, unique=true, nullable=false)
      */
-    protected $username_canonical;
+    protected string $username_canonical;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=100, unique=true)
      */
-    protected $email_canonical;
+    protected string $email_canonical;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=190)
      * @Assert\Length(min = 6, minMessage = "Password length must be at least {{ limit }} characters long")
      */
-    protected $password;
+    protected string $password;
 
     /**
-     * @var string|null
-     *
      * Plain password. Used for model validation. Must not be persisted.
      */
-    protected $plain_password;
+    protected ?string $plain_password;
 
     /**
-     * @var array
-     *
      * @ORM\Column(type="array")
      */
-    protected $roles;
+    protected array $roles;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $last_login;
+    protected \DateTimeInterface $last_login;
 
     /**
-     * @var UserGroup[]|ArrayCollection
+     * @var UserGroup[]|Collection
      *
      * @ORM\ManyToMany(targetEntity="SmartCore\CMSBundle\Entity\UserGroup")
      * @ORM\JoinTable(name="users_groups_relations")
      */
-    protected $groups;
+    protected Collection $groups;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->created_at   = new \DateTime();
@@ -112,9 +96,6 @@ abstract class UserModel implements UserInterface
         $this->username     = '';
     }
 
-    /**
-     * @return string
-     */
     public function serialize(): string
     {
         return serialize([
@@ -128,10 +109,7 @@ abstract class UserModel implements UserInterface
         ]);
     }
 
-    /**
-     * @param string $serialized
-     */
-    public function unserialize($serialized): void
+    public function unserialize(string $serialized): void
     {
         [
             $this->id,
@@ -144,11 +122,6 @@ abstract class UserModel implements UserInterface
         ] = unserialize($serialized, ['allowed_classes' => false]);
     }
 
-    /**
-     * @param string $string
-     *
-     * @return string|null
-     */
     static public function canonicalize(string $string): ?string
     {
         if (null === $string) {
@@ -163,11 +136,6 @@ abstract class UserModel implements UserInterface
         return $result;
     }
 
-    /**
-     * Returns the salt that was originally used to encode the password.
-     *
-     * {@inheritdoc}
-     */
     public function getSalt(): ?string
     {
         // See "Do you need to use a Salt?" at https://symfony.com/doc/current/cookbook/security/entity_provider.html
@@ -402,7 +370,7 @@ abstract class UserModel implements UserInterface
     /**
      * @return \DateTime|null
      */
-    public function getLastLogin(): ?\DateTime
+    public function getLastLogin(): ?\DateTimeInterface
     {
         return $this->last_login;
     }
@@ -412,7 +380,7 @@ abstract class UserModel implements UserInterface
      *
      * @return $this
      */
-    public function setLastLogin(?\DateTime $last_login): self
+    public function setLastLogin(?\DateTimeInterface $last_login): self
     {
         $this->last_login = $last_login;
 

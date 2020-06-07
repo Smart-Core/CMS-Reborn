@@ -4,28 +4,18 @@ declare(strict_types=1);
 
 namespace SmartCore\Bundle\MediaBundle\Controller;
 
-use SmartCore\RadBundle\Controller\Controller;
+use Doctrine\ORM\EntityManagerInterface;
 use SmartCore\Bundle\MediaBundle\Entity\File;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ImageController extends Controller
+class ImageController extends AbstractController
 {
-    /**
-     * @param Request $request
-     * @param         $collection
-     * @param         $filter
-     * @param         $slug
-     *
-     * @return Response
-     */
-    public function renderAction(Request $request, $collection, $filter, $slug)
+    public function render(Request $request, $collection, $filter, $slug, EntityManagerInterface $em): Response
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->get('doctrine.orm.entity_manager');
-
         $file = $em->getRepository(File::class)->find($request->query->get('id', 0));
 
         $newImage = $this->get('smart_media')->generateTransformedFile($request->query->get('id', 0), $filter);
@@ -42,12 +32,7 @@ class ImageController extends Controller
         return $response;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function uploadAction(Request $request)
+    public function uploadAction(Request $request): JsonResponse
     {
         $data = [
             'status' => 200,
@@ -74,12 +59,7 @@ class ImageController extends Controller
         return new JsonResponse($data);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function removeAction(Request $request)
+    public function removeAction(Request $request): JsonResponse
     {
         // @todo указание коллекции
         if ($this->get('smart_media')->getCollection(1)->remove($request->query->get('id'))) {

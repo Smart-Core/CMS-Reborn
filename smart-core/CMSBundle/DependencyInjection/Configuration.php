@@ -22,11 +22,13 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('cms');
         $rootNode = $treeBuilder->getRootNode();
 
+        /* @deprecated
         $rootNode
             ->children()
                 ->scalarNode('cache_provider')->defaultValue('cms_cache_pool.filesystem')->end()
             ->end()
         ;
+        */
 
         return $treeBuilder;
     }

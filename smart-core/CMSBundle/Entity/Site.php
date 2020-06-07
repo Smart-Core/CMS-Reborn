@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SmartCore\CMSBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use SmartCore\RadBundle\Doctrine\ColumnTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -26,51 +25,36 @@ class Site
     use ColumnTrait\User;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $theme;
+    protected ?string $theme;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $web_root;
+    protected ?string $web_root;
 
     /**
-     * @var Domain|null
-     *
      * @ORM\OneToOne(targetEntity="Domain")
      * @ORM\JoinColumn(nullable=true)
      */
-    protected $domain;
+    protected ?Domain $domain;
 
     /**
-     * @var Folder|null
-     *
      * @ORM\OneToOne(targetEntity="Folder")
      * @ORM\JoinColumn(nullable=true)
      */
-    protected $root_folder;
+    protected ?Folder $root_folder;
 
     /**
-     * @var Language
-     *
      * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumn(nullable=false)
      */
-    protected $language;
+    protected Language $language;
 
-    /**
-     * Site constructor.
-     *
-     * @param null|string $name
-     */
     public function __construct(?string $name = null)
     {
-        if (!empty($name)) {
+        if ( ! empty($name)) {
             $this->name = $name;
         }
 
@@ -80,7 +64,47 @@ class Site
     }
 
     /**
-     * @return null|Domain
+     * @return string|null
+     */
+    public function getTheme(): ?string
+    {
+        return $this->theme;
+    }
+
+    /**
+     * @param string|null $theme
+     *
+     * @return $this
+     */
+    public function setTheme(?string $theme): self
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWebRoot(): ?string
+    {
+        return $this->web_root;
+    }
+
+    /**
+     * @param string|null $web_root
+     *
+     * @return $this
+     */
+    public function setWebRoot(?string $web_root): self
+    {
+        $this->web_root = $web_root;
+
+        return $this;
+    }
+
+    /**
+     * @return Domain|null
      */
     public function getDomain(): ?Domain
     {
@@ -92,49 +116,9 @@ class Site
      *
      * @return $this
      */
-    public function setDomain(?Domain $domain): ?Site
+    public function setDomain(?Domain $domain): self
     {
         $this->domain = $domain;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getWebRoot()
-    {
-        return $this->web_root;
-    }
-
-    /**
-     * @param null|string $web_root
-     *
-     * @return $this
-     */
-    public function setWebRoot($web_root)
-    {
-        $this->web_root = $web_root;
-
-        return $this;
-    }
-
-    /**
-     * @return Language
-     */
-    public function getLanguage(): Language
-    {
-        return $this->language;
-    }
-
-    /**
-     * @param Language $language
-     *
-     * @return $this
-     */
-    public function setLanguage(Language $language)
-    {
-        $this->language = $language;
 
         return $this;
     }
@@ -152,7 +136,7 @@ class Site
      *
      * @return $this
      */
-    public function setRootFolder(?Folder $root_folder): Site
+    public function setRootFolder(?Folder $root_folder): self
     {
         $this->root_folder = $root_folder;
 
@@ -160,21 +144,21 @@ class Site
     }
 
     /**
-     * @return null|string
+     * @return Language
      */
-    public function getTheme(): ?string
+    public function getLanguage(): Language
     {
-        return $this->theme;
+        return $this->language;
     }
 
     /**
-     * @param null|string $theme
+     * @param Language $language
      *
      * @return $this
      */
-    public function setTheme(?string $theme): Site
+    public function setLanguage(Language $language): self
     {
-        $this->theme = $theme;
+        $this->language = $language;
 
         return $this;
     }

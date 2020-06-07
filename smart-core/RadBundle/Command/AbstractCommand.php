@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SmartCore\RadBundle\Command;
 
-use App\Utils\VerboseCommandUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;

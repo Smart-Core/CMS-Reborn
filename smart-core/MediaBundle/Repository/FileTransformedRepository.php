@@ -1,52 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartCore\Bundle\MediaBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
-use SmartCore\Bundle\MediaBundle\Entity\FileTransformed;
 
 class FileTransformedRepository extends EntityRepository
 {
-    /**
-     * FileTransformedRepository constructor.
-     *
-     * @param ManagerRegistry $registry
-     */
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, FileTransformed::class);
-    }
-
-    /**
-     * @param Collection|int $collection
-     *
-     * @return int
-     */
-    public function countByCollection($collection)
+    public function countByCollection(string $collection): int
     {
         $qb = $this->createQueryBuilder('e')
-            ->select('count(e.id)')
+            ->select('COUNT(e.id)')
             ->where('e.collection = :collection')
             ->setParameter('collection', $collection)
         ;
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
-    /**
-     * @param Collection|int $collection
-     *
-     * @return int
-     */
-    public function summarySize($collection)
+    public function summarySize(string $collection): int
     {
         $qb = $this->createQueryBuilder('e')
-            ->select('sum(e.size)')
+            ->select('SUM(e.size)')
             ->where('e.collection = :collection')
             ->setParameter('collection', $collection)
         ;
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 }

@@ -1,27 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartCore\Bundle\MediaBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use SmartCore\Bundle\MediaBundle\Entity\Collection;
 use SmartCore\Bundle\MediaBundle\Entity\FileTransformed;
 use SmartCore\Bundle\MediaBundle\Service\MediaCloudService;
-use Symfony\Component\Console\Command\Command;
+use SmartCore\RadBundle\Command\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class FiltersPurgeCommand extends Command
+class FiltersPurgeCommand extends AbstractCommand
 {
     protected static $defaultName = 'smart:media:filters:purge';
 
     protected $em;
     protected $mcs;
 
-    /**
-     * StatsCommand constructor.
-     *
-     * @param EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em, MediaCloudService $mcs)
     {
         parent::__construct();
@@ -37,14 +33,16 @@ class FiltersPurgeCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<comment>Truncate FileTransformed Table...</comment>');
 
         $cmd = $this->em->getClassMetadata(FileTransformed::class);
+
         $connection = $this->em->getConnection();
         $dbPlatform = $connection->getDatabasePlatform();
         $connection->query('SET FOREIGN_KEY_CHECKS=0');
+
         $q = $dbPlatform->getTruncateTableSql($cmd->getTableName());
         $connection->executeUpdate($q);
         $connection->query('SET FOREIGN_KEY_CHECKS=1');
@@ -54,5 +52,7 @@ class FiltersPurgeCommand extends Command
         foreach ($this->mcs->getCollections() as $collection) {
             $collection->purgeTransformedFiles();
         }
+
+        return 0;
     }
 }

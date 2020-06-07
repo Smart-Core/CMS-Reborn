@@ -37,6 +37,8 @@ class CMSExtension extends Extension
     /**
      * @param ContainerBuilder $container
      * @param string           $cache_proviver_id
+     *
+     * @deprecated
      */
     protected function createCacheService(ContainerBuilder $container, string $cache_proviver_id): void
     {

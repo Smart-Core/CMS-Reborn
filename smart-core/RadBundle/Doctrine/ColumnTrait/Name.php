@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait Name
 {
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", length=190, nullable=true)
      */
     protected ?string $name;
 

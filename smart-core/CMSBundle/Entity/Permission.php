@@ -29,79 +29,45 @@ class Permission
     use ColumnTrait\CreatedAt;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=80, nullable=false)
      * @Assert\NotBlank()
      */
-    protected $bundle;
+    protected string $bundle;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=80, nullable=false)
      * @Assert\NotBlank()
      */
-    protected $action;
+    protected string $action;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $default_value;
+    protected bool $default_value;
 
     /**
-     * @var array
-     *
      * @ORM\Column(type="array")
      */
-    protected $roles;
+    protected array $roles;
 
     /**
-     * @var UserGroup[]|ArrayCollection
+     * @var UserGroup[]
      *
      * @ORM\ManyToMany(targetEntity="UserGroup", mappedBy="permissions", fetch="EXTRA_LAZY")
      */
-    protected $user_groups;
+    protected Collection $user_groups;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
-        $this->default      = false;
-        $this->roles        = [];
-        $this->created_at   = new \DateTime();
-        $this->user_groups  = new ArrayCollection();
+        $this->default_value = false;
+        $this->roles         = [];
+        $this->created_at    = new \DateTime();
+        $this->user_groups   = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return (string) $this->getBundle().':'.$this->getAction();
-    }
-
-    /**
-     * @return string
-     */
-    public function getAction(): string
-    {
-        return $this->action;
-    }
-
-    /**
-     * @param string $action
-     *
-     * @return $this
-     */
-    public function setAction(string $action)
-    {
-        $this->action = $action;
-
-        return $this;
     }
 
     /**
@@ -117,7 +83,7 @@ class Permission
      *
      * @return $this
      */
-    public function setBundle(string $bundle)
+    public function setBundle(string $bundle): self
     {
         $this->bundle = $bundle;
 
@@ -125,21 +91,21 @@ class Permission
     }
 
     /**
-     * @return Collection|UserGroup[]
+     * @return string
      */
-    public function getUserGroups(): Collection
+    public function getAction(): string
     {
-        return $this->user_groups;
+        return $this->action;
     }
 
     /**
-     * @param ArrayCollection|UserGroup[] $user_groups
+     * @param string $action
      *
      * @return $this
      */
-    public function setUserGroups($user_groups)
+    public function setAction(string $action): self
     {
-        $this->user_groups = $user_groups;
+        $this->action = $action;
 
         return $this;
     }
@@ -157,7 +123,7 @@ class Permission
      *
      * @return $this
      */
-    public function setDefaultValue($default_value): Permission
+    public function setDefaultValue(bool $default_value): self
     {
         $this->default_value = $default_value;
 
@@ -177,9 +143,29 @@ class Permission
      *
      * @return $this
      */
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @return UserGroup[]
+     */
+    public function getUserGroups(): array
+    {
+        return $this->user_groups;
+    }
+
+    /**
+     * @param UserGroup[] $user_groups
+     *
+     * @return $this
+     */
+    public function setUserGroups(array $user_groups): self
+    {
+        $this->user_groups = $user_groups;
 
         return $this;
     }

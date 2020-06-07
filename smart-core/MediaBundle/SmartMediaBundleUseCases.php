@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartCore\Bundle\MediaBundle;
 
 use SmartCore\Bundle\MediaBundle\Service\MediaCollection;
@@ -8,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class SmartMediaBundleUseCases
 {
-    public function examples()
+    public function examples(): void
     {
         $container = 'container';
 

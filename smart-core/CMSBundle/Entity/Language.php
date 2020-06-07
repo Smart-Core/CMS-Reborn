@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SmartCore\CMSBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use SmartCore\RadBundle\Doctrine\ColumnTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -32,22 +33,17 @@ class Language
     use ColumnTrait\User;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", unique=true, length=12)
      */
-    protected $code;
+    protected string $code;
 
     /**
-     * @var Domain[]|ArrayCollection
+     * @var Domain[]
      *
      * @ORM\OneToMany(targetEntity="Domain", mappedBy="language")
      */
-    protected $domains;
+    protected Collection $domains;
 
-    /**
-     * Language constructor.
-     */
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -66,31 +62,31 @@ class Language
     }
 
     /**
-     * @param string|null $code
+     * @param string $code
      *
      * @return $this
      */
-    public function setCode(?string $code): Language
+    public function setCode(string $code): self
     {
-        $this->code = (string) $code;
+        $this->code = $code;
 
         return $this;
     }
 
     /**
-     * @return ArrayCollection|Domain[]
+     * @return Collection|Domain[]
      */
-    public function getDomains()
+    public function getDomains(): Collection
     {
         return $this->domains;
     }
 
     /**
-     * @param ArrayCollection|Domain[] $domains
+     * @param Collection|Domain[] $domains
      *
      * @return $this
      */
-    public function setDomains($domains)
+    public function setDomains($domains): self
     {
         $this->domains = $domains;
 

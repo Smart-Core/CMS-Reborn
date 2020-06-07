@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartCore\Bundle\HtmlBundle;
 
 /**
- * @todo поддерку тега <base>
+ * @todo поддержку тега <base>
  * @todo document_ready
  * @todo Безопасные скрипты: //<![CDATA[' .... //]]>
  * @todo продумать приоритеты подключения LESS и CSS, а то сейчас LESS подключается только через тег link, а он выводится вперед всех. возможно это и не так важно ;)

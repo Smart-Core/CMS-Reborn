@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace SmartCore\CMSBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
+use SmartCore\RadBundle\Command\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class CreateAdminLteSymlinkCommand extends Command
+class CreateAdminLteSymlinkCommand extends AbstractCommand
 {
     const METHOD_COPY = 'copy';
     const METHOD_ABSOLUTE_SYMLINK = 'absolute symlink';
@@ -21,10 +20,7 @@ class CreateAdminLteSymlinkCommand extends Command
 
     protected static $defaultName = 'cms:adminlte:create-symlink';
 
-    /** @var SymfonyStyle */
-    private $io;
     private $filesystem;
-    private $kernel;
 
     protected function configure()
     {
@@ -33,12 +29,6 @@ class CreateAdminLteSymlinkCommand extends Command
         ;
     }
 
-    /**
-     * CreateAdminLteSymlinkCommand constructor.
-     *
-     * @param KernelInterface $kernel
-     * @param Filesystem      $filesystem
-     */
     public function __construct(KernelInterface $kernel, Filesystem $filesystem)
     {
         parent::__construct();
@@ -47,25 +37,7 @@ class CreateAdminLteSymlinkCommand extends Command
         $this->kernel     = $kernel;
     }
 
-    /**
-     * This optional method is the first one executed for a command after configure()
-     * and is useful to initialize properties based on the input arguments and options.
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
-    {
-        // SymfonyStyle is an optional feature that Symfony provides so you can
-        // apply a consistent look to the commands of your application.
-        // See https://symfony.com/doc/current/console/style.html
-        $this->io = new SymfonyStyle($input, $output);
-    }
-
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int|void|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $projectDir = $this->kernel->getProjectDir();
 

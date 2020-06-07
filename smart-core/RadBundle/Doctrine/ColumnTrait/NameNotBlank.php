@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait NameNotBlank
 {
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", length=190, nullable=false)
      * @Assert\NotBlank()
      */
     protected string $name;

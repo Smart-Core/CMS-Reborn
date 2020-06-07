@@ -15,8 +15,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="cms_domains")
  *
  * @UniqueEntity(fields="name", message="Данный домен занят")
- *
- * @todo user
  */
 class Domain
 {
@@ -32,24 +30,20 @@ class Domain
     /**
      * For Aliases
      *
-     * @var Domain|null
-     *
      * @ORM\ManyToOne(targetEntity="Domain", inversedBy="children")
      * @ORM\JoinColumn(name="parent_pid")
      */
-    protected $parent;
+    protected ?Domain $parent;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $is_redirect;
+    protected bool $is_redirect;
 
     /**
      * List of aliases
      *
-     * @var Domain[]|ArrayCollection
+     * @var Domain[]|Collection
      *
      * @ORM\OneToMany(targetEntity="Domain", mappedBy="parent")
      * @ORM\OrderBy({"position" = "ASC", "name" = "ASC"})
@@ -57,56 +51,27 @@ class Domain
     protected $children;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(type="date", nullable=true)
      */
-    protected $paid_till_date;
+    protected ?\DateTimeInterface $paid_till_date;
 
     /**
-     * @var Language|null
-     *
      * @ORM\ManyToOne(targetEntity="Language", inversedBy="domains")
      * @ORM\JoinColumn(nullable=true)
      */
-    protected $language;
+    protected ?Language $language;
 
-    /**
-     * Domain constructor.
-     *
-     * @param null|string $name
-     */
     public function __construct(?string $name = null)
     {
-        if (!empty($name)) {
+        if ( ! empty($name)) {
             $this->name = $name;
         }
 
-        $this->children   = new ArrayCollection();
-        $this->created_at = new \DateTime();
-        $this->is_enabled = true;
+        $this->children    = new ArrayCollection();
+        $this->created_at  = new \DateTime();
+        $this->is_enabled  = true;
         $this->is_redirect = false;
-        $this->position   = 0;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getPaidTillDate(): ?\DateTime
-    {
-        return $this->paid_till_date;
-    }
-
-    /**
-     * @param \DateTime $paid_till_date
-     *
-     * @return $this
-     */
-    public function setPaidTillDate(?\DateTime $paid_till_date): Domain
-    {
-        $this->paid_till_date = $paid_till_date;
-
-        return $this;
+        $this->position    = 0;
     }
 
     /**
@@ -122,7 +87,7 @@ class Domain
      *
      * @return $this
      */
-    public function setParent(?Domain $parent): Domain
+    public function setParent(?Domain $parent): self
     {
         $this->parent = $parent;
 
@@ -130,19 +95,11 @@ class Domain
     }
 
     /**
-     * @return ArrayCollection|Domain[]
-     */
-    public function getChildren(): Collection
-    {
-        return $this->children;
-    }
-
-    /**
      * @return bool
      */
-    public function isRedirect(): bool
+    public function isIsRedirect(): bool
     {
-        return (bool) $this->is_redirect;
+        return $this->is_redirect;
     }
 
     /**
@@ -150,9 +107,49 @@ class Domain
      *
      * @return $this
      */
-    public function setIsRedirect($is_redirect): Domain
+    public function setIsRedirect(bool $is_redirect): self
     {
-        $this->is_redirect = (bool) $is_redirect;
+        $this->is_redirect = $is_redirect;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Domain[]
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param Collection|Domain[] $children
+     *
+     * @return $this
+     */
+    public function setChildren($children): self
+    {
+        $this->children = $children;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getPaidTillDate(): ?\DateTimeInterface
+    {
+        return $this->paid_till_date;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $paid_till_date
+     *
+     * @return $this
+     */
+    public function setPaidTillDate(?\DateTimeInterface $paid_till_date): self
+    {
+        $this->paid_till_date = $paid_till_date;
 
         return $this;
     }
@@ -170,7 +167,7 @@ class Domain
      *
      * @return $this
      */
-    public function setLanguage(?Language $language): Domain
+    public function setLanguage(?Language $language): self
     {
         $this->language = $language;
 

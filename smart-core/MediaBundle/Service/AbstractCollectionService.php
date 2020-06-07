@@ -27,22 +27,12 @@ abstract class AbstractCollectionService
     /** @var string|null */
     protected $upload_filter;
 
-    /**
-     * AbstractCollectionService constructor.
-     *
-     * @param EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
         $this->generator = new GeneratorService();
     }
 
-    /**
-     * @param ProviderInterface $provider
-     *
-     * @return $this
-     */
     public function setProvider(ProviderInterface $provider): self
     {
         $this->provider = $provider;
@@ -50,27 +40,16 @@ abstract class AbstractCollectionService
         return $this;
     }
 
-    /**
-     * @return ProviderInterface
-     */
     public function getProvider(): ProviderInterface
     {
         return $this->provider;
     }
 
-    /**
-     * @return EntityManagerInterface
-     */
     public function getEntityManager(): EntityManagerInterface
     {
         return $this->em;
     }
 
-    /**
-     * @param EntityManagerInterface $em
-     *
-     * @return $this
-     */
     public function setEntityManager(EntityManagerInterface $em): self
     {
         $this->em = $em;
@@ -80,26 +59,16 @@ abstract class AbstractCollectionService
 
     /**
      * Получить ссылку на файл.
-     *
-     * @param int         $id
-     * @param string|null $filter
-     *
-     * @return string|null
      */
-    public function get($id, $filter = null)
+    public function get(int $id, ?string $filter = null): ?string
     {
         return $this->provider->get($id, $filter, $this->getDefaultFilter());
     }
 
-    /**
-     * @param int $id
-     *
-     * @return bool
-     */
-    public function remove($id)
+    public function remove(int $id): bool
     {
         if (empty($id)) {
-            return;
+            return false;
         }
 
         $this->getProvider()->remove($id);
@@ -120,7 +89,7 @@ abstract class AbstractCollectionService
      *
      * @return mixed|null
      */
-    public function generateTransformedFile(int $id, $filter)
+    public function generateTransformedFile($id, $filter)
     {
         return $this->getProvider()->generateTransformedFile($id, $filter);
     }

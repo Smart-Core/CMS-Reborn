@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SmartCore\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SmartCore\Bundle\MediaBundle\Repository\FileTransformedRepository;
 use SmartCore\RadBundle\Doctrine\ColumnTrait;
 
 /**
- * @ORM\Entity(repositoryClass="SmartCore\Bundle\MediaBundle\Repository\FileTransformedRepository")
+ * @ORM\Entity(repositoryClass="FileTransformedRepository::class")
  * @ORM\Table(name="media_files_transformed",
  *      indexes={
  *          @ORM\Index(columns={"collection"}),
@@ -25,7 +28,7 @@ class FileTransformed
     /**
      * @var File
      *
-     * @ORM\ManyToOne(targetEntity="File", inversedBy="filesTransformed", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="File", inversedBy="filesTransformed", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     protected $file;

@@ -30,56 +30,45 @@ class Region
     use ColumnTrait\CreatedAt;
     use ColumnTrait\Description;
     use ColumnTrait\Position;
+    use ColumnTrait\NameNotBlank;
     use ColumnTrait\User;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=50, nullable=false)
-     * @Assert\NotBlank()
-     */
-    protected $name;
-
-    /**
-     * @var array
-     *
      * @ORM\Column(type="array")
      */
-    protected $permissions_cache;
+    protected array $permissions_cache;
 
     /**
-     * @var Folder[]|ArrayCollection
+     * @var Folder[]|Collection
      *
      * @ORM\ManyToMany(targetEntity="Folder", inversedBy="regions", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="cms_regions_inherit")
      */
-    protected $folders;
+    protected Collection $folders;
 
     /**
-     * @var UserGroup[]|ArrayCollection
+     * @var UserGroup[]|Collection
      *
      * @ORM\ManyToMany(targetEntity="UserGroup", inversedBy="regions_granted_read", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="cms_permissions_regions_read")
      * @ORM\OrderBy({"position" = "ASC", "title" = "ASC"})
      */
-    protected $groups_granted_read;
+    protected Collection $groups_granted_read;
 
     /**
-     * @var UserGroup[]|ArrayCollection
+     * @var UserGroup[]|Collection
      *
      * @ORM\ManyToMany(targetEntity="UserGroup", inversedBy="regions_granted_write", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="cms_permissions_regions_write")
      * @ORM\OrderBy({"position" = "ASC", "title" = "ASC"})
      */
-    protected $groups_granted_write;
+    protected Collection $groups_granted_write;
 
     /**
-     * @var Site
-     *
      * @ORM\ManyToOne(targetEntity="Site")
      * @ORM\JoinColumn(nullable=false)
      */
-    protected $site;
+    protected Site $site;
 
     /**
      * Region constructor.
@@ -102,10 +91,7 @@ class Region
         $this->site         = $site;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $descr = $this->getDescription();
 
@@ -115,7 +101,7 @@ class Region
     /**
      * @ORM\PreFlush()
      */
-    public function updatePermissionsCache()
+    public function updatePermissionsCache(): void
     {
         $this->permissions_cache = [];
 
@@ -128,36 +114,21 @@ class Region
         }
     }
 
-    /**
-     * @param Folder $folder
-     *
-     * @return $this
-     */
-    public function addFolder(Folder $folder)
+    public function getPermissionsCache(string $permission = null): array
     {
-        $this->folders->add($folder);
+        if (!empty($permission)) {
+            if (isset($this->permissions_cache[$permission])) {
+                return $this->permissions_cache[$permission];
+            } else {
+                return [];
+            }
+        }
 
-        return $this;
-    }
+        if (empty($this->permissions_cache)) {
+            $this->permissions_cache = [];
+        }
 
-    /**
-     * @param Folder[] $folder
-     *
-     * @return $this
-     */
-    public function setFolders($folders)
-    {
-        $this->folders = $folders;
-
-        return $this;
-    }
-
-    /**
-     * @return Folder[]|ArrayCollection
-     */
-    public function getFolders()
-    {
-        return $this->folders;
+        return $this->permissions_cache;
     }
 
     /**
@@ -165,7 +136,7 @@ class Region
      *
      * @return $this
      */
-    public function setName($name): Region
+    public function setName($name): self
     {
         if ('content' !== $this->name) {
             $this->name = $name;
@@ -174,12 +145,31 @@ class Region
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function addFolder(Folder $folder): self
     {
-        return $this->name;
+        $this->folders->add($folder);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Folder[]
+     */
+    public function getFolders(): Collection
+    {
+        return $this->folders;
+    }
+
+    /**
+     * @param Collection|Folder[] $folders
+     *
+     * @return $this
+     */
+    public function setFolders(Collection $folders): self
+    {
+        $this->folders = $folders;
+
+        return $this;
     }
 
     /**
@@ -187,7 +177,7 @@ class Region
      *
      * @return Region
      */
-    public function addGroupGrantedRead(UserGroup $userGroup): Region
+    public function addGroupGrantedRead(UserGroup $userGroup): self
     {
         if (!$this->groups_granted_read->contains($userGroup)) {
             $this->groups_granted_read->add($userGroup);
@@ -197,7 +187,7 @@ class Region
     }
 
     /**
-     * @return ArrayCollection|UserGroup[]
+     * @return Collection|UserGroup[]
      */
     public function getGroupsGrantedRead(): Collection
     {
@@ -205,7 +195,7 @@ class Region
     }
 
     /**
-     * @param ArrayCollection|UserGroup[] $groups_granted_read
+     * @param Collection|UserGroup[] $groups_granted_read
      *
      * @return $this
      */
@@ -248,28 +238,6 @@ class Region
         $this->groups_granted_write = $groups_granted_write;
 
         return $this;
-    }
-
-    /**
-     * @param string|null $permission
-     *
-     * @return array
-     */
-    public function getPermissionsCache(string $permission = null): array
-    {
-        if (!empty($permission)) {
-            if (isset($this->permissions_cache[$permission])) {
-                return $this->permissions_cache[$permission];
-            } else {
-                return [];
-            }
-        }
-
-        if (empty($this->permissions_cache)) {
-            $this->permissions_cache = [];
-        }
-
-        return $this->permissions_cache;
     }
 
     /**
