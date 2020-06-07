@@ -6,7 +6,7 @@ namespace SmartCore\CMSBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Smart\CoreBundle\Doctrine\ColumnTrait;
+use SmartCore\RadBundle\Doctrine\ColumnTrait;
 use SmartCore\CMSBundle\Entity\UserGroup;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -34,7 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class UserModel implements UserInterface
 {
-    use ColumnTrait\EmailUnique;
+    use ColumnTrait\EmailUniqueNotNull;
     use ColumnTrait\CreatedAt;
     use ColumnTrait\IsEnabled;
 
@@ -53,15 +53,6 @@ abstract class UserModel implements UserInterface
      * @ORM\Column(type="string", length=40, unique=true)
      */
     protected $username_canonical;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank()
-     * @Assert\Email(mode="strict")
-     */
-    protected $email;
 
     /**
      * @var string
@@ -219,14 +210,6 @@ abstract class UserModel implements UserInterface
         }
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->email;
     }
 
     /**

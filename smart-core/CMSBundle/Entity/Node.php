@@ -6,8 +6,8 @@ namespace SmartCore\CMSBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Smart\CoreBundle\CMS\NodeInterface;
-use Smart\CoreBundle\Doctrine\ColumnTrait;
+use SmartCore\RadBundle\CMS\NodeInterface;
+use SmartCore\RadBundle\Doctrine\ColumnTrait;
 use SmartCore\CMSBundle\Tools\FrontControl;
 use Symfony\Component\Validator\Constraints as Assert;
 

@@ -3,7 +3,7 @@
 namespace SmartCore\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Smart\CoreBundle\Doctrine\ColumnTrait;
+use SmartCore\RadBundle\Doctrine\ColumnTrait;
 
 /**
  * @ORM\Entity(repositoryClass="SmartCore\Bundle\MediaBundle\Repository\FileTransformedRepository")

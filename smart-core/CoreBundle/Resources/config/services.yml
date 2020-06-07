@@ -1,5 +1,0 @@
-services:
-    twig.json_decode:
-        class: Smart\CoreBundle\Twig\JsonDecodeExtension
-        tags:
-            - { name: twig.extension }

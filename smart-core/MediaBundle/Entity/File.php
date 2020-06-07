@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SmartCore\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Smart\CoreBundle\Doctrine\ColumnTrait;
+use SmartCore\RadBundle\Doctrine\ColumnTrait;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**

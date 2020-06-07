@@ -6,7 +6,7 @@ namespace SmartCore\Bundle\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Smart\CoreBundle\Doctrine\ColumnTrait;
+use SmartCore\RadBundle\Doctrine\ColumnTrait;
 use SmartCore\Bundle\MediaBundle\Provider\ProviderInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 

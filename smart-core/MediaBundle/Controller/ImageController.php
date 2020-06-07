@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SmartCore\Bundle\MediaBundle\Controller;
 
-use Smart\CoreBundle\Controller\Controller;
+use SmartCore\RadBundle\Controller\Controller;
 use SmartCore\Bundle\MediaBundle\Entity\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -7,7 +7,7 @@ namespace SmartCore\CMSBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Smart\CoreBundle\Doctrine\ColumnTrait;
+use SmartCore\RadBundle\Doctrine\ColumnTrait;
 
 /**
  * @ORM\Entity
@@ -194,7 +194,7 @@ class UserGroup
 
         return $this;
     }
-    
+
     /**
      * @return Collection|Permission[]
      */

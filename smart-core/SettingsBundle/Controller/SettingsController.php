@@ -2,10 +2,10 @@
 
 namespace SmartCore\Bundle\SettingsBundle\Controller;
 
-use Smart\CoreBundle\Controller\Controller;
-use Smart\CoreBundle\Form\DataTransformer\ArrayToStringTransformer;
-use Smart\CoreBundle\Form\DataTransformer\BooleanToStringTransformer;
-use Smart\CoreBundle\Form\DataTransformer\HtmlTransformer;
+use SmartCore\RadBundle\Controller\Controller;
+use SmartCore\RadBundle\Form\DataTransformer\ArrayToStringTransformer;
+use SmartCore\RadBundle\Form\DataTransformer\BooleanToStringTransformer;
+use SmartCore\RadBundle\Form\DataTransformer\HtmlTransformer;
 use SmartCore\Bundle\SettingsBundle\Manager\SettingsManager;
 use SmartCore\Bundle\SettingsBundle\Model\SettingModel;
 use SmartCore\Bundle\SettingsBundle\Model\SettingPersonalModel;

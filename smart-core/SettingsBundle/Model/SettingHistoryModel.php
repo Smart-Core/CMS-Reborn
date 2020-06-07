@@ -3,7 +3,7 @@
 namespace SmartCore\Bundle\SettingsBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Smart\CoreBundle\Doctrine\ColumnTrait;
+use SmartCore\RadBundle\Doctrine\ColumnTrait;
 
 class SettingHistoryModel
 {

@@ -1,0 +1,16 @@
+{
+    "name":        "smart-core/rad-bundle",
+    "description": "Rapid development Bundle.",
+    "type":        "symfony-bundle",
+    "homepage":    "https://github.com/Smart-Core/RadBundle",
+    "license":     "MIT",
+    "require": {
+        "php": ">=7.4",
+        "ramsey/uuid-doctrine": "^1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "SmartCore\\RadBundle\\": ""
+        }
+    }
+}

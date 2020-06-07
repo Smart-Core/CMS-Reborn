@@ -69,7 +69,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Smart\CoreBundle\Doctrine\ColumnTrait;
+use SmartCore\RadBundle\Doctrine\ColumnTrait;
 use SmartCore\CMSBundle\Model\UserModel;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
