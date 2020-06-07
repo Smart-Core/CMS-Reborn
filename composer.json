@@ -58,7 +58,7 @@
             "SmartCore\\Bundle\\HtmlBundle\\": "smart-core/HtmlBundle/",
             "SmartCore\\Bundle\\MediaBundle\\": "smart-core/MediaBundle/",
             "SmartCore\\Bundle\\SettingsBundle\\": "smart-core/SettingsBundle/",
-            "Smart\\CoreBundle\\": "smart-core/CoreBundle/"
+            "SmartCore\\RadBundle\\": "smart-core/RadBundle/"
         }
     },
     "autoload-dev": {
