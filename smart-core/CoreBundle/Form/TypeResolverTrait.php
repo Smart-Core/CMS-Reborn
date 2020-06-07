@@ -35,7 +35,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
-trait TypeResolverTtait
+trait TypeResolverTrait
 {
     public function resolveTypeName($type, $default = TextType::class)
     {
