@@ -16,6 +16,7 @@
         "sensiolabs/security-checker": "^6.0",
         "smart-core/db-dumper-bundle": "dev-master",
         "smart-core/felib-bundle": "dev-master",
+        "symfony-cmf/routing": "^2.3",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
         "symfony/dotenv": "4.4.*",

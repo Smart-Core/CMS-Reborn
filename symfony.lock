@@ -244,6 +244,9 @@
     "spatie/db-dumper": {
         "version": "2.16.1"
     },
+    "symfony-cmf/routing": {
+        "version": "2.3.2"
+    },
     "symfony/asset": {
         "version": "v4.4.2"
     },
