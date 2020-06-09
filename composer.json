@@ -12,6 +12,7 @@
         "almasaeed2010/adminlte": "~3.0",
         "knplabs/knp-menu-bundle": "^3.0",
         "liip/imagine-bundle": "^2.3",
+        "ramsey/uuid-doctrine": "^1.6",
         "sensio/framework-extra-bundle": "^5.5",
         "sensiolabs/security-checker": "^6.0",
         "smart-core/db-dumper-bundle": "dev-master",
