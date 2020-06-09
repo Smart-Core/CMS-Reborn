@@ -35,20 +35,13 @@
     <link rel="stylesheet" href="{{ asset('bundles/felib/font-awesome/5/css/all.min.css') }}">
 
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{ asset('bundles/felib/ionicons/2.0.1/css/ionicons.min.css') }}">
     <!-- Tempusdominus Bbootstrap 4 -->
     <link rel="stylesheet" href="{{ asset('bundles/cms/assets/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('bundles/cms/assets/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- JQVMap -->
     <link rel="stylesheet" href="{{ asset('bundles/cms/assets/adminlte/plugins/jqvmap/jqvmap.min.css') }}">
-
-    {% if app.debug -%}
-        <link href="{{ asset('bundles/cms/assets/adminlte/dist/css/adminlte.css') }}" rel="stylesheet" type="text/css" />
-    {% else -%}
-        <link href="{{ asset('bundles/cms/assets/adminlte/dist/css/adminlte.min.css') }}" rel="stylesheet" type="text/css" />
-    {%- endif %}
-
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('bundles/cms/assets/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Daterange picker -->
@@ -56,8 +49,13 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('bundles/cms/assets/adminlte/plugins/summernote/summernote-bs4.css') }}">
     <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+{#    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">#}
 
+    {% if app.debug -%}
+        <link href="{{ asset('bundles/cms/assets/adminlte/dist/css/adminlte.css') }}" rel="stylesheet" type="text/css" />
+    {% else -%}
+        <link href="{{ asset('bundles/cms/assets/adminlte/dist/css/adminlte.min.css') }}" rel="stylesheet" type="text/css" />
+    {%- endif %}
 
     <link href="{{ asset('bundles/cms/assets/adminlte_custom.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}

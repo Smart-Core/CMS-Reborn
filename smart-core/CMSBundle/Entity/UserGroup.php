@@ -7,6 +7,7 @@ namespace SmartCore\CMSBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use SmartCore\CMSBundle\Model\UserGroupTrait;
 use SmartCore\RadBundle\Doctrine\ColumnTrait;
 
 /**
@@ -26,123 +27,69 @@ use SmartCore\RadBundle\Doctrine\ColumnTrait;
  */
 class UserGroup
 {
+    use ColumnTrait\Id;
     use ColumnTrait\Position;
     use ColumnTrait\TitleNotBlank;
     use ColumnTrait\CreatedAt;
+    use ColumnTrait\NameUnique;
+
+    use UserGroupTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $is_default_folders_granted_read;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $is_default_folders_granted_write;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $is_default_nodes_granted_read;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $is_default_nodes_granted_write;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $is_default_regions_granted_read;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $is_default_regions_granted_write;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=false, unique=true)
-     */
-    protected $name;
-
-    /**
-     * @var array
-     *
      * @ORM\Column(type="array", nullable=true)
      */
-    protected $roles;
+    protected ?array $roles;
 
     /**
-     * @var Permission[]|ArrayCollection
+     * @var Permission[]|Collection
      *
      * @ORM\ManyToMany(targetEntity="Permission", inversedBy="user_groups", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="cms_permissions_groups_relations")
      * @ORM\OrderBy({"bundle" = "ASC", "position" = "ASC"})
      */
-    protected $permissions;
+    protected Collection $permissions;
 
     /**
-     * @var Folder[]|ArrayCollection
+     * @var Folder[]|Collection
      *
      * @ORM\ManyToMany(targetEntity="Folder", mappedBy="groups_granted_read", fetch="EXTRA_LAZY")
      */
-    protected $folders_granted_read;
+    protected Collection $folders_granted_read;
 
     /**
-     * @var Folder[]|ArrayCollection
+     * @var Folder[]|Collection
      *
      * @ORM\ManyToMany(targetEntity="Folder", mappedBy="groups_granted_write", fetch="EXTRA_LAZY")
      */
-    protected $folders_granted_write;
+    protected Collection $folders_granted_write;
 
     /**
-     * @var Node[]|ArrayCollection
+     * @var Node[]|Collection
      *
      * @ORM\ManyToMany(targetEntity="Node", mappedBy="groups_granted_read", fetch="EXTRA_LAZY")
      */
-    protected $nodes_granted_read;
+    protected Collection $nodes_granted_read;
 
     /**
-     * @var Node[]|ArrayCollection
+     * @var Node[]|Collection
      *
      * @ORM\ManyToMany(targetEntity="Node", mappedBy="groups_granted_write", fetch="EXTRA_LAZY")
      */
-    protected $nodes_granted_write;
+    protected Collection $nodes_granted_write;
 
     /**
-     * @var Region[]|ArrayCollection
+     * @var Region[]|Collection
      *
      * @ORM\ManyToMany(targetEntity="Region", mappedBy="groups_granted_read", fetch="EXTRA_LAZY")
      */
-    protected $regions_granted_read;
+    protected Collection $regions_granted_read;
 
     /**
      * @var Region[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Region", mappedBy="groups_granted_write", fetch="EXTRA_LAZY")
      */
-    protected $regions_granted_write;
+    protected Collection $regions_granted_write;
 
     /**
      * UserGroup constructor.
@@ -208,7 +155,7 @@ class UserGroup
      *
      * @return $this
      */
-    public function setPermissions($permissions): self
+    public function setPermissions(Collection $permissions): self
     {
         $this->permissions = $permissions;
 
@@ -218,7 +165,7 @@ class UserGroup
     /**
      * @return ArrayCollection|Folder[]
      */
-    public function getFoldersGrantedRead()
+    public function getFoldersGrantedRead(): Collection
     {
         return $this->folders_granted_read;
     }
@@ -228,7 +175,7 @@ class UserGroup
      *
      * @return $this
      */
-    public function setFoldersGrantedRead($folders_granted_read): self
+    public function setFoldersGrantedRead(Collection $folders_granted_read): self
     {
         $this->folders_granted_read = $folders_granted_read;
 
@@ -251,86 +198,6 @@ class UserGroup
     public function setFoldersGrantedWrite($folders_granted_write): self
     {
         $this->folders_granted_write = $folders_granted_write;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDefaultFoldersGrantedRead(): bool
-    {
-        return $this->is_default_folders_granted_read;
-    }
-
-    /**
-     * @param bool $is_default_folders_granted_read
-     *
-     * @return $this
-     */
-    public function setIsDefaultFoldersGrantedRead($is_default_folders_granted_read): self
-    {
-        $this->is_default_folders_granted_read = $is_default_folders_granted_read;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDefaultFoldersGrantedWrite(): bool
-    {
-        return $this->is_default_folders_granted_write;
-    }
-
-    /**
-     * @param bool $is_default_folders_granted_write
-     *
-     * @return $this
-     */
-    public function setIsDefaultFoldersGrantedWrite($is_default_folders_granted_write): self
-    {
-        $this->is_default_folders_granted_write = $is_default_folders_granted_write;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDefaultNodesGrantedRead(): bool
-    {
-        return $this->is_default_nodes_granted_read;
-    }
-
-    /**
-     * @param bool $is_default_nodes_granted_read
-     *
-     * @return $this
-     */
-    public function setIsDefaultNodesGrantedRead($is_default_nodes_granted_read): self
-    {
-        $this->is_default_nodes_granted_read = $is_default_nodes_granted_read;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDefaultNodesGrantedWrite(): bool
-    {
-        return $this->is_default_nodes_granted_write;
-    }
-
-    /**
-     * @param bool $is_default_nodes_granted_write
-     *
-     * @return $this
-     */
-    public function setIsDefaultNodesGrantedWrite($is_default_nodes_granted_write): self
-    {
-        $this->is_default_nodes_granted_write = $is_default_nodes_granted_write;
 
         return $this;
     }
@@ -470,22 +337,6 @@ class UserGroup
     }
 
     /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
      * @param string $role
      *
      * @return bool
@@ -514,18 +365,6 @@ class UserGroup
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles);
         }
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
         return $this;
     }

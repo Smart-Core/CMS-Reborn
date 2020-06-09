@@ -27,7 +27,7 @@ class CMSExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
 
         //$this->createCacheService($container, $config['cache_provider']);
 
@@ -40,7 +40,7 @@ class CMSExtension extends Extension
      *
      * @deprecated
      */
-    protected function createCacheService(ContainerBuilder $container, string $cache_proviver_id): void
+    protected function __createCacheService(ContainerBuilder $container, string $cache_proviver_id): void
     {
         $definition = new Definition(
             'SmartCore\\CMSBundle\\Cache\\CmsCacheProvider', [

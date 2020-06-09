@@ -3,6 +3,11 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $cmsAdminPath: '%cms.admin_path%'
+    _instanceof:
+        Knp\Menu\Matcher\Voter\VoterInterface:
+            tags: ['knp_menu.voter']
 
     SmartCore\CMSBundle\:
         resource: '../../*'
@@ -13,6 +18,3 @@ services:
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags: ['controller.service_arguments']
-
-#    SmartCore\CMSBundle\Command\:
-#        resource: '../../Command'

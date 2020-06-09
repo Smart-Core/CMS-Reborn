@@ -25,16 +25,16 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        admin:
+        cms_admin:
             anonymous: ~
             context: cms
-            pattern: ^/%admin_path%
+            pattern: ^/%cms.admin_path%
             form_login:
-                check_path: /%admin_path%/
-                login_path: /%admin_path%/
-                default_target_path: /%admin_path%/
+                check_path: /%cms.admin_path%/
+                login_path: /%cms.admin_path%/
+                default_target_path: /%cms.admin_path%/
             logout:
-                path: /%admin_path%/logout
+                path: /%cms.admin_path%/logout
             remember_me:
                 secret: "%env(APP_SECRET)%"
                 name: REMEMBER_ME
@@ -68,10 +68,10 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/_assistant/, roles: ROLE_ADMIN }
-        - { path: ^/%admin_path%/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/%admin_path%/resetting$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/%admin_path%/system/config/, role: ROLE_ADMIN_CONFIG }
-        - { path: ^/%admin_path%, roles: ROLE_ADMIN }
+        - { path: ^/%cms.admin_path%/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/%cms.admin_path%/resetting$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/%cms.admin_path%/system/config/, role: ROLE_ADMIN_CONFIG }
+        - { path: ^/%cms.admin_path%, roles: ROLE_ADMIN }
         - { path: ^/efconnect, role: ROLE_FILEMANAGER }
         - { path: ^/elfinder, role: ROLE_FILEMANAGER }
 #        - { path: ^/%user_path%/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
