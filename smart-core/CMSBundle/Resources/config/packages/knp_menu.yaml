@@ -1,0 +1,3 @@
+#knp_menu:
+#    providers:
+#        builder_alias: false    # disable the builder-alias-based provider

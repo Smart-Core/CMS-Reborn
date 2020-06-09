@@ -3,10 +3,6 @@
   --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-.sidebar {
-  padding-left: 0 !important;
-}
-
 .text-sm {
   font-size: 0.78rem !important;
 }
@@ -15,7 +11,32 @@
   font-size: 70% !important;
 }
 
+.nav-sidebar .nav-header {
+  padding-left: 1rem !important;
+  text-transform: uppercase;
+}
+
+/*
+.sidebar-dark-primary .nav-sidebar > .nav-link.active,
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
+.sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active {
+  background-color: #6a6b6c !important;
+  color: #ffffff;
+}
+
+.sidebar-dark-primary .nav-sidebar.nav-legacy > .nav-link.active,
+.sidebar-dark-primary .nav-sidebar.nav-legacy > .nav-item > .nav-link.active,
+.sidebar-light-primary .nav-sidebar.nav-legacy > .nav-item > .nav-link.active {
+  border-color: #747576 !important;
+}
+*/
+
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+
 /* ------------------------------------------------------------------------------------ */
+
 a {
   color: #337ab7;
 }
@@ -28,7 +49,7 @@ a:hover {
 }
 
 .brand-link .brand-image {
-  margin-left: 0.3rem !important;
+  /*margin-left: 0.3rem !important;*/
 }
 
 .cms-site-switcher {

@@ -57,6 +57,8 @@ Create user: Создание пользователя
 Create users group: Создание группы пользователей
 Created: Создано
 Created at: Дата создания
+Dataset: Набор данных
+Datasets: Наборы данных
 Date: Дата
 Dashboard: Рабочий стол
 Datetime: Дата и время
@@ -209,6 +211,7 @@ Rollback: Откатить
 Router node id: Модуль обрабатывающий маршрутизацию
 Save: Сохранить
 Screenshot: Скриншот
+Search: Поиск
 Send: Отправить
 Settings: Настройки
 Sign in: Вход на сайт

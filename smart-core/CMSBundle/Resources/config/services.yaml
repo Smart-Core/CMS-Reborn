@@ -18,3 +18,8 @@ services:
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags: ['controller.service_arguments']
+
+    SmartCore\CMSBundle\Menu\AdminMenu:
+        arguments: ['@knp_menu.factory']
+        tags:
+            - { name: knp_menu.menu_builder, method: main, alias: cms_admin_main } # The alias is what is used to retrieve the menu

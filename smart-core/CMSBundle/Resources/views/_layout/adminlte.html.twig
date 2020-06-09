@@ -58,6 +58,9 @@
     {%- endif %}
 
     <link href="{{ asset('bundles/cms/assets/adminlte_custom.css') }}" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+    </style>
 {% endblock %}
 
 {% block scripts -%}
@@ -119,18 +122,20 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
+                {#
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#index3.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
                 </li>
+                #}
             </ul>
 
             <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
+            <form class="form-inline ml-auto">
                 <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control form-control-navbar" type="search" placeholder="{{ 'Search'|trans }}" aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-navbar" type="submit">
                             <i class="fas fa-search"></i>
@@ -141,6 +146,10 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{{ app.request.baseUrl }}/" class="nav-link" title="Перейти на сайт"><i class="fa fa-home"></i> На сайт</a>
+                </li>
+
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
@@ -238,10 +247,12 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
 
-            <a href="{{ path('cms_admin.main') }}" class="brand-link">
-                <img src="{{ asset('bundles/cms/assets/adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            <a href="{{ path('cms_admin.index') }}" class="brand-link">
+                <img src="{{ asset('bundles/cms/assets/adminlte/dist/img/AdminLTELogo.png') }}"
+                     alt="AdminLTE Logo"
+                     class="brand-image img-circle elevation-3"
                      style="opacity: .8">
-                <span class="brand-text font-weight-light">Smart Core CMS</span>
+                <span class="brand-text _font-weight-light">Smart Core CMS</span>
             </a>
 
             <!-- Sidebar -->
@@ -249,188 +260,13 @@
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-compact nav-legacy" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview menu-open">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Dashboard
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#./index.html" class="nav-link active">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v1</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#./index2.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v2</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#./index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v3</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#pages/widgets.html" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Widgets
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
-                                <p>
-                                    Layout Options
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">6</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#pages/layout/top-nav.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Top Navigation</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#pages/layout/boxed.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Boxed</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#pages/layout/fixed-sidebar.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Fixed Sidebar</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#pages/layout/fixed-topnav.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Fixed Navbar</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#pages/layout/fixed-footer.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Fixed Footer</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#pages/layout/collapsed-sidebar.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Collapsed Sidebar</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                    <!-- Sidebar Menu -->
+                    {{ knp_menu_render('cms_admin_main', {
+                        'clear_matcher': false,
+                        'template': '@CMS/KnpMenu/adminlte_sidebar_menu.html.twig',
+                    })}}
 
-                        <li class="nav-header">MISCELLANEOUS</li>
-                        <li class="nav-item">
-                            <a href="#https://adminlte.io/docs/3.0" class="nav-link">
-                                <i class="nav-icon fas fa-file"></i>
-                                <p>Documentation</p>
-                            </a>
-                        </li>
-                        <li class="nav-header">MULTI LEVEL EXAMPLE</li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <p>Level 1</p>
-                            </a>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-circle"></i>
-                                <p>
-                                    Level 1
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Level 2</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item has-treeview">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>
-                                            Level 2
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Level 3</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Level 3</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Level 3</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Level 2</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <p>Level 1</p>
-                            </a>
-                        </li>
-                        <li class="nav-header">LABELS</li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-circle text-danger"></i>
-                                <p class="text">Important</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-circle text-warning"></i>
-                                <p>Warning</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
-                                <p>Informational</p>
-                            </a>
-                        </li>
-                    </ul>
+{#                    {% include '@CMS/_adminlte/sidebar_menu.html.twig' %}#}
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
@@ -444,12 +280,17 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-dark">Dashboard</h1>
+                            <h1 class="m-0 text-dark">
+                                {% block page_header '' -%} &nbsp;&nbsp;
+                                <small>{% block page_description '' -%}</small>
+                            </h1>
                         </div><!-- /.col -->
+
                         <div class="col-sm-6">
+                            {# @todo breadcrumb #}
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Dashboard v1</li>
+                                <li class="breadcrumb-item"><a href="{{ path('cms_admin.index') }}">Администрирование</a></li>
+                                <li class="breadcrumb-item active"><a href="{{ app.request.baseUrl }}/">Главная</a></li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
