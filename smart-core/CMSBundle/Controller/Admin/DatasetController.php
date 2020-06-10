@@ -6,7 +6,9 @@ namespace SmartCore\CMSBundle\Controller\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
 use SmartCore\CMSBundle\Entity\Content\Dataset;
+use SmartCore\CMSBundle\Entity\Content\Table;
 use SmartCore\CMSBundle\Form\Type\DatasetFormType;
+use SmartCore\CMSBundle\Form\Type\TableFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +30,7 @@ class DatasetController extends AbstractController
     }
 
     /**
-     * @Route("/create/", name="cms_admin.dataset.create")
+     * @Route("/_create_/", name="cms_admin.dataset.create")
      */
     public function create(Request $request, EntityManagerInterface $em): Response
     {
@@ -61,7 +63,46 @@ class DatasetController extends AbstractController
     }
 
     /**
-     * @Route("/{dataset_slug}/", name="cms_admin.dataset.edit")
+     * @Route("/{dataset_slug}/", name="cms_admin.dataset.show")
+     */
+    public function show(string $dataset_slug, Request $request, EntityManagerInterface $em): Response
+    {
+        $dataset = $em->getRepository(Dataset::class)->findOneBy(['slug' => $dataset_slug]);
+
+        if ($dataset === null) {
+            throw $this->createNotFoundException();
+        }
+
+        $table = new Table();
+        $table
+            ->setUser($this->getUser())
+            ->setDataset($dataset)
+        ;
+
+        $form = $this->createForm(TableFormType::class, $table);
+        $form->remove('save');
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
+            if ($form->isValid() and $form->get('create')->isClicked()) {
+                $em->persist($table);
+                $em->flush();
+
+                $this->addFlash('success', 'Таблица добавлена.');
+
+                return $this->redirectToRoute('cms_admin.dataset.show', ['dataset_slug' => $dataset->getSlug()]);
+            }
+        }
+
+        return $this->render('@CMS/admin/dataset/show.html.twig', [
+            'dataset' => $dataset,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{dataset_slug}/edit/", name="cms_admin.dataset.edit")
      */
     public function edit(string $dataset_slug, Request $request, EntityManagerInterface $em): Response
     {
@@ -78,7 +119,7 @@ class DatasetController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->get('cancel')->isClicked()) {
-                return $this->redirectToRoute('cms_admin.dataset');
+                return $this->redirectToRoute('cms_admin.dataset.show', ['dataset_slug' => $dataset->getSlug()]);
             }
 
             if ($form->isValid() and $form->get('save')->isClicked()) {
@@ -87,11 +128,12 @@ class DatasetController extends AbstractController
 
                 $this->addFlash('success', 'Набор данных обновлён.');
 
-                return $this->redirectToRoute('cms_admin.dataset');
+                return $this->redirectToRoute('cms_admin.dataset.show', ['dataset_slug' => $dataset->getSlug()]);
             }
         }
 
         return $this->render('@CMS/admin/dataset/edit.html.twig', [
+            'dataset' => $dataset,
             'form' => $form->createView(),
         ]);
     }

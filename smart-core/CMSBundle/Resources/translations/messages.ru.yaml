@@ -30,6 +30,7 @@ Briefly: Кратко
 Bundle: Пакет
 Cancel: Отменить
 Class: Класс
+Class name: Имя класса
 Classes: Классы
 Close: Закрыть
 Code: Код
@@ -102,6 +103,8 @@ Entity: Сущность
 Entities: Сущности
 Error: Ошибка
 Exit: Выход
+Field: Поле
+Fields: Поля
 Filemanager: Управление файлами
 Filename: Имя файла
 File: Файл
@@ -233,6 +236,8 @@ Styles: Стили
 System: Система
 System information: Информация о системе
 Success: Успешно
+Table: Таблица
+Tables: Таблицы
 Tag: Тэг
 Tags: Тэги
 Template: Шаблон

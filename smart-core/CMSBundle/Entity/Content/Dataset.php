@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SmartCore\CMSBundle\Entity\Content;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use SmartCore\RadBundle\Doctrine\ColumnTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -30,6 +32,14 @@ class Dataset
      */
     protected ?string $icon;
 
+    /**
+     * @var Table[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="Table", mappedBy="dataset")
+     * @ORM\OrderBy({"position" = "ASC"})
+     */
+    protected Collection $tables;
+
     public function __construct()
     {
         $this->created_at   = new \DateTime();
@@ -37,6 +47,7 @@ class Dataset
         $this->icon         = null;
         $this->name         = '';
         $this->slug         = '';
+        $this->tables       = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -63,4 +74,25 @@ class Dataset
 
         return $this;
     }
+
+    /**
+     * @return Collection|Table[]
+     */
+    public function getTables(): Collection
+    {
+        return $this->tables;
+    }
+
+    /**
+     * @param Collection|Table[] $tables
+     *
+     * @return $this
+     */
+    public function setTables(Collection $tables): self
+    {
+        $this->tables = $tables;
+
+        return $this;
+    }
+
 }

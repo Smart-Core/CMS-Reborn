@@ -4,6 +4,14 @@
 
 {% block content_body %}
 
+    {% set menu = knp_menu_get('cms_admin_dataset', [], {
+        'dataset': dataset,
+    }) %}
+
+    {{ knp_menu_render(menu, {
+        'clear_matcher': false,
+    })}}
+
     {{ form(form) }}
 
 {% endblock content_body %}

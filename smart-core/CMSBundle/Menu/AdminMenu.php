@@ -35,10 +35,27 @@ class AdminMenu
             ->setAttribute('class', 'nav-item')
         ;
 
+        $menu->addChild('Configuration')
+            ->setAttribute('class', 'nav-header');
+
         $menu->addChild('Datasets', ['route' => 'cms_admin.dataset'])
             ->setExtras(['icon' => 'fas fa-th'])
             ->setAttribute('class', 'nav-item')
         ;
+
+        return $menu;
+    }
+
+    public function dataset(array $options): ItemInterface
+    {
+        $menu = $this->factory->createItem('cms_admin_dataset');
+
+        $menu->setChildrenAttribute('class', 'nav _flex-column nav-pills');
+
+        $menu->setExtra('select_intehitance', false);
+
+        $menu->addChild('Tables', ['route' => 'cms_admin.dataset.show', 'routeParameters' => ['dataset_slug' => $options['dataset']->getSlug()]]);
+        $menu->addChild('Settings', ['route' => 'cms_admin.dataset.edit', 'routeParameters' => ['dataset_slug' => $options['dataset']->getSlug()]]);
 
         return $menu;
     }
