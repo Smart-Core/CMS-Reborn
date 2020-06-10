@@ -1,39 +1,28 @@
 {% extends '@CMS/_layout/adminlte.html.twig' %}
 
-{% block page_header %}
-    {{ dataset }}
-{% endblock page_header %}
-{% block page_description 'Dataset'|trans %}
+{% block page_header 'Edit table schema'|trans %}
 
 {% block content_body %}
-
-    {% set menu = knp_menu_get('cms_admin_dataset', [], {
-        'dataset': dataset,
-    }) %}
-
-    {{ knp_menu_render(menu, {
-        'clear_matcher': false,
-    })}}
+    <h3>{{ table.title }} <small>(Набор данных <a href="{{ path('cms_admin.dataset.show', {'dataset_slug': table.dataset.slug}) }}">{{ table.dataset }}</a>)</small></h3>
 
     <table class="table table-bordered _table-striped table-hover cms-admin-table">
         <thead>
         <tr>
-            <th>Заголовок</th>
-            <th>Имя</th>
-            <th>Имя класса</th>
+            <th>Заголовок поля</th>
+            <th>Тип</th>
             <th>Описание</th>
             <th>Дата создания</th>
         </tr>
         </thead>
         <tbody>
-        {% for e in dataset.tables %}
+        {% for e in table.fields %}
             <tr>
-                <td><a href="{{ path('cms_admin.dataset.schema', {'id': e.id}) }}">
+                <td>
+                    <a href="{{ path('cms_admin.dataset.schema', {'id': e.id}) }}">
                         {{ e.title }}
                     </a>
                 </td>
                 <td><a href="{{ path('cms_admin.dataset.schema', {'id': e.id}) }}">{{ e.name }}</a></td>
-                <td>App/Entity/{{ dataset.slug }}/{{ e.className }}</td>
                 <td>{{ e.description }}</td>
                 <td>{{ e.createdAt|date('Y-m-d H:i:s') }}</td>
             </tr>
@@ -41,8 +30,5 @@
         </tbody>
     </table>
 
-    <h4>Добавить таблицу</h4>
-
-    {{ form(form) }}
 
 {% endblock content_body %}

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SmartCore\CMSBundle\Entity\Content;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use SmartCore\RadBundle\Doctrine\ColumnTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -17,22 +19,29 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      },
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"class_name", "dataset_id"}),
+ *          @ORM\UniqueConstraint(columns={"name", "dataset_id"}),
+ *          @ORM\UniqueConstraint(columns={"title", "dataset_id"}),
  *      }
  * )
- * @UniqueEntity(fields="name")
- * @UniqueEntity(fields="title")
+ * @UniqueEntity(fields={"name", "dataset"})
+ * @UniqueEntity(fields={"title", "dataset"})
  * @UniqueEntity(fields={"class_name", "dataset"})
  */
 class Table
 {
     use ColumnTrait\Id;
-    use ColumnTrait\TitleUniqueNotBlank;
-    use ColumnTrait\NameUniqueNotBlank;
+    use ColumnTrait\TitleNotBlank;
+    use ColumnTrait\NameNotBlank;
     use ColumnTrait\Description;
     use ColumnTrait\Position;
     use ColumnTrait\CreatedAt;
     use ColumnTrait\UpdatedAt;
     use ColumnTrait\User;
+
+    /**
+     * Используется для автоматического создания первичного ключа. Не маммится.
+     */
+    public ?string $primary_key_type = null;
 
     /**
      * @ORM\Column(type="string", length=190, nullable=false)
@@ -46,14 +55,29 @@ class Table
      * @ORM\JoinColumn(nullable=false)
      *
      * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     protected Dataset $dataset;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Field")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected Field $primary_key;
+
+    /**
+     * @var Field[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="Field", mappedBy="table", cascade={"persist"})
+     * @ORM\OrderBy({"position" = "ASC"})
+     */
+    protected Collection $fields;
 
     public function __construct()
     {
         $this->created_at   = new \DateTime();
         $this->description  = null;
-        $this->icon         = null;
+        $this->fields       = new ArrayCollection();
         $this->class_name   = '';
         $this->name         = '';
         $this->title        = '';
@@ -62,7 +86,7 @@ class Table
 
     public function __toString(): string
     {
-        return $this->name;
+        return $this->title;
     }
 
     public function getDataset(): Dataset
@@ -85,6 +109,30 @@ class Table
     public function setClassName(?string $class_name): self
     {
         $this->class_name = trim((string) $class_name);
+
+        return $this;
+    }
+
+    public function getFields(): Collection
+    {
+        return $this->fields;
+    }
+
+    public function setFields(Collection $fields): self
+    {
+        $this->fields = $fields;
+
+        return $this;
+    }
+
+    public function getPrimaryKey(): Field
+    {
+        return $this->primary_key;
+    }
+
+    public function setPrimaryKey(Field $primary_key): self
+    {
+        $this->primary_key = $primary_key;
 
         return $this;
     }

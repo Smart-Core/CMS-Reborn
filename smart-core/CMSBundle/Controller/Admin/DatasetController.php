@@ -6,6 +6,7 @@ namespace SmartCore\CMSBundle\Controller\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
 use SmartCore\CMSBundle\Entity\Content\Dataset;
+use SmartCore\CMSBundle\Entity\Content\Field;
 use SmartCore\CMSBundle\Entity\Content\Table;
 use SmartCore\CMSBundle\Form\Type\DatasetFormType;
 use SmartCore\CMSBundle\Form\Type\TableFormType;
@@ -86,12 +87,28 @@ class DatasetController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isValid() and $form->get('create')->isClicked()) {
-                $em->persist($table);
-                $em->flush();
+                $field = new Field();
+                $field
+                    ->setUser($this->getUser())
+                    ->setTable($table)
+                    ->setName('id')
+                    ->setTitle("ID ({$table->primary_key_type})")
+                    ->setType('integer')
+                    ->setIsPrimary(true)
+                ;
 
-                $this->addFlash('success', 'Таблица добавлена.');
+                $table->setPrimaryKey($field);
 
-                return $this->redirectToRoute('cms_admin.dataset.show', ['dataset_slug' => $dataset->getSlug()]);
+//                $em->persist($table);
+
+                dump($table);
+                dump($field);
+//                $em->persist($table);
+//                $em->flush();
+
+//                $this->addFlash('success', 'Таблица добавлена.');
+
+//                return $this->redirectToRoute('cms_admin.dataset.show', ['dataset_slug' => $dataset->getSlug()]);
             }
         }
 
@@ -138,4 +155,15 @@ class DatasetController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/schema/{id}/", name="cms_admin.dataset.schema")
+     */
+    public function schema(Table $table, Request $request, EntityManagerInterface $em): Response
+    {
+
+        return $this->render('@CMS/admin/dataset/schema.html.twig', [
+            'table' => $table,
+            //'form' => $form->createView(),
+        ]);
+    }
 }

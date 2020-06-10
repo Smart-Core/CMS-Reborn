@@ -4,13 +4,177 @@ declare(strict_types=1);
 
 namespace SmartCore\CMSBundle\Entity\Content;
 
+use Doctrine\ORM\Mapping as ORM;
+use SmartCore\RadBundle\Doctrine\ColumnTrait;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="cms_content_fields",
+ *      indexes={
+ *          @ORM\Index(columns={"position"})
+ *      },
+ *      uniqueConstraints={
+ *          @ORM\UniqueConstraint(columns={"name", "table_id"}),
+ *          @ORM\UniqueConstraint(columns={"title", "table_id"}),
+ *      }
+ * )
+ * @UniqueEntity(fields={"name", "table"})
+ * @UniqueEntity(fields={"title", "table"})
+ */
 class Field
 {
+    use ColumnTrait\Id;
+    use ColumnTrait\TitleNotBlank;
+    use ColumnTrait\NameNotBlank;
+    use ColumnTrait\Comment;
+    use ColumnTrait\Position;
+    use ColumnTrait\CreatedAt;
+    use ColumnTrait\UpdatedAt;
+    use ColumnTrait\User;
+
     /**
-     * Constructor.
+     * @ORM\Column(type="boolean", nullable=false)
      */
+    protected bool $is_primary;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected bool $is_nullable;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected bool $is_unique;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected ?string $default;
+
+    /**
+     * @ORM\Column(type="string", length=190, nullable=true)
+     */
+    protected ?string $length;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=false)
+     */
+    protected string $type;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Table", inversedBy="fields", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     */
+    protected Table $table;
+
     public function __construct()
     {
+        $this->created_at   = new \DateTime();
+        $this->default      = '';
+        $this->description  = null;
+        $this->name         = '';
+        $this->is_primary   = false;
+        $this->is_nullable  = false;
+        $this->is_unique    = false;
+        $this->length       = null;
+        $this->title        = '';
+        $this->type         = 'string';
+        $this->position     = 0;
+    }
 
+    public function __toString(): string
+    {
+        return $this->title;
+    }
+
+    public function getTable(): Table
+    {
+        return $this->table;
+    }
+
+    public function setTable(Table $table): self
+    {
+        $this->table = $table;
+
+        return $this;
+    }
+
+    public function isIsPrimary(): bool
+    {
+        return $this->is_primary;
+    }
+
+    public function setIsPrimary(bool $is_primary): self
+    {
+        $this->is_primary = $is_primary;
+
+        return $this;
+    }
+
+    public function isIsNullable(): bool
+    {
+        return $this->is_nullable;
+    }
+
+    public function setIsNullable(bool $is_nullable): self
+    {
+        $this->is_nullable = $is_nullable;
+
+        return $this;
+    }
+
+    public function isIsUnique(): bool
+    {
+        return $this->is_unique;
+    }
+
+    public function setIsUnique(bool $is_unique): self
+    {
+        $this->is_unique = $is_unique;
+
+        return $this;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getDefault(): ?string
+    {
+        return $this->default;
+    }
+
+
+    public function setDefault(?string $default): self
+    {
+        $this->default = $default;
+
+        return $this;
+    }
+
+    public function getLength(): ?string
+    {
+        return $this->length;
+    }
+
+    public function setLength(?string $length): self
+    {
+        $this->length = $length;
+
+        return $this;
     }
 }

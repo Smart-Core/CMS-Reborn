@@ -60,6 +60,15 @@
     <link href="{{ asset('bundles/cms/assets/adminlte_custom.css') }}" rel="stylesheet" type="text/css" />
 
     <style type="text/css">
+        .cms-admin-table {
+            background-color: #f5f6f7;
+        }
+        .cms-admin-table th {
+            background-color: #e9eaeb;
+        }
+        td {
+            padding: 8px !important;
+        }
     </style>
 {% endblock %}
 
@@ -113,11 +122,11 @@
       $('ul.nav li a').addClass('nav-link');
       $('.container form').addClass('cms_form');
       $('.container-fluid form').addClass('cms_form');
-      /*
-      $('.nav .nav-item .nav-link').hover(
+
+      $('.cms-nav .nav-item .nav-link').hover(
         function () {
           if (!$(this).hasClass('active')){
-            $(this).css('background-color', '#e8e9ea');
+            $(this).css('background-color', '#d3d4d5');
           }
         },
         function () {
@@ -126,7 +135,7 @@
           }
         }
       );
-      */
+
     </script>
 
 {% endblock body_js %}

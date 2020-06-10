@@ -73,7 +73,8 @@ a:hover {
   clear: both;
 }
 .content-wrapper {
-  background: #efefef;
+  /*background: #efefef;*/
+  background: #f1f1f1;
 }
 
 .form-button {

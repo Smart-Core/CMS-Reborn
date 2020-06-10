@@ -50,7 +50,7 @@ class AdminMenu
     {
         $menu = $this->factory->createItem('cms_admin_dataset');
 
-        $menu->setChildrenAttribute('class', 'nav _flex-column nav-pills');
+        $menu->setChildrenAttribute('class', 'nav _flex-column nav-pills cms-nav');
 
         $menu->setExtra('select_intehitance', false);
 
