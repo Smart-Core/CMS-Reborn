@@ -104,10 +104,35 @@
     <!-- AdminLTE for demo purposes -->
 {#    <script src="{{ asset('bundles/cms/assets/adminlte/dist/js/demo.js') }}"></script>#}
 
+    {% include '@CMS/pnotify_flash_messages.html.twig' %}
+
+    <script>
+      $('li.active a').addClass('active');
+      $('li.current a').addClass('active');
+      $('ul.nav li').addClass('nav-item');
+      $('ul.nav li a').addClass('nav-link');
+      $('.container form').addClass('cms_form');
+      $('.container-fluid form').addClass('cms_form');
+      /*
+      $('.nav .nav-item .nav-link').hover(
+        function () {
+          if (!$(this).hasClass('active')){
+            $(this).css('background-color', '#e8e9ea');
+          }
+        },
+        function () {
+          if (!$(this).hasClass('active')) {
+            $(this).css('background-color', 'transparent');
+          }
+        }
+      );
+      */
+    </script>
+
 {% endblock body_js %}
 
 {% if form is defined %}
-    {% form_theme form '@CMS/Form/bootstrap_wide.html.twig' %}
+    {% form_theme form '@CMS/Form/horizontal_layout.html.twig' %}
 {% endif %}
 
 {% block body_attr %}{{ parent() }} class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm"{% endblock body_attr %}

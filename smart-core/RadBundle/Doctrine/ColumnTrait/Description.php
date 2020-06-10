@@ -18,7 +18,7 @@ trait Description
 
     public function setDescription(?string $description): self
     {
-        $this->description = trim($description);
+        $this->description = $description === null ? null : trim($description);
 
         return $this;
     }

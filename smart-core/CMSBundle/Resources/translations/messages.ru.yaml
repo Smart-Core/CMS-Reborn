@@ -44,6 +44,7 @@ Controls in toolbar: Управление через тулбар
 Count: Количество
 Creator: Создатель
 Create: Создать
+Create dataset: Создать набор данных
 Create datetime: Дата создания
 Create domain: Создание домена
 Create domain alias: Создание алиаса домена
@@ -80,6 +81,7 @@ Domain: Домен
 Domain aliases: Алиасы домена
 Domains: Домены
 Edit: Редактировать
+Edit dataset: Редактировать набор данных
 Edit domain: Редактировние домена
 Edit domain alias: Редактирование алиаса домена
 Edit domain alias for: Редактировние алиас домена для
@@ -223,7 +225,7 @@ Site structure: Структура сайта
 Size: Размер
 Slide: Слайд
 Slider: Слайдер
-Slug: Часть URI
+Slug: Машинное имя
 Status: Статус
 String: Строка
 Structure: Структура

@@ -27,13 +27,21 @@ use SmartCore\RadBundle\Doctrine\ColumnTrait;
  */
 class UserGroup
 {
-    use ColumnTrait\Id;
     use ColumnTrait\Position;
     use ColumnTrait\TitleNotBlank;
     use ColumnTrait\CreatedAt;
     use ColumnTrait\NameUnique;
 
     use UserGroupTrait;
+
+    /**
+     * Доктрина не создаёт связь м2м, если задать use ColumnTrait\Id;
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
     /**
      * @ORM\Column(type="array", nullable=true)
@@ -120,12 +128,14 @@ class UserGroup
         $this->roles = $roles;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return (string) $this->getTitle();
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**
