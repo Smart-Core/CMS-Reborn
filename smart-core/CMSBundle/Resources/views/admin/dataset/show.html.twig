@@ -33,7 +33,7 @@
                     </a>
                 </td>
                 <td><a href="{{ path('cms_admin.dataset.show', {'dataset_slug': e.id}) }}">{{ e.name }}</a></td>
-                <td>App/Entity/Dataset/{{ dataset.slug }}/{{ e.className }}</td>
+                <td>App/Entity/{{ dataset.slug }}/{{ e.className }}</td>
                 <td>{{ e.description }}</td>
                 <td>{{ e.createdAt|date('Y-m-d H:i:s') }}</td>
             </tr>
