@@ -26,6 +26,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(fields={"name", "dataset"})
  * @UniqueEntity(fields={"title", "dataset"})
  * @UniqueEntity(fields={"class_name", "dataset"})
+ *
+ * @todo repositoryClass
+ * @todo кастомные валидаторы
+ * @todo ORM\HasLifecycleCallbacks
+ * @todo MappedSuperclass
+ * @todo уникальности ORM\UniqueConstraint и UniqueEntity
+ * @todo индексы, например: ORM\Index(columns={"site_id", "name"}),
+ * @todo константы, в виде текстового поля, просто кастомный пхп код
+ * @todo методы, в виде текстового поля, просто кастомный пхп код
  */
 class Table
 {
@@ -61,9 +70,9 @@ class Table
 
     /**
      * @ORM\OneToOne(targetEntity="Field")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
-    protected Field $primary_key;
+    protected ?Field $primary_key;
 
     /**
      * @var Field[]|Collection
@@ -82,6 +91,7 @@ class Table
         $this->name         = '';
         $this->title        = '';
         $this->position     = 0;
+        $this->primary_key  = null;
     }
 
     public function __toString(): string
@@ -125,7 +135,7 @@ class Table
         return $this;
     }
 
-    public function getPrimaryKey(): Field
+    public function getPrimaryKey(): ?Field
     {
         return $this->primary_key;
     }

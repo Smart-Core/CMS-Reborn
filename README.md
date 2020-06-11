@@ -71,3 +71,25 @@ smart_core_cms:
     resource: '@CMSBundle/Resources/config/routes.yaml'
 
 ```
+
+Наборы данных
+-------------
+
+Поля таблиц можно задавать несколькими способами:
+
+ 1. Указать готовый трейт, в этом случае настроить можно только is_index.
+ 2. Указать доктрин Doctrine\DBAL\Types\Types, в этом случае можно как угодно настроить поле (пока что конфиг записывается тут: `Resourse/config/dataset.yaml`)
+ 
+На каждое поле можно указать аннотации, например указав следующий набор будет создан первичный ключ:
+
+```
+@ORM\Id
+@ORM\GeneratedValue(strategy="AUTO") // {"AUTO", "SEQUENCE", "TABLE", "IDENTITY", "NONE", "UUID", "CUSTOM"}
+```
+
+Валидаторы
+
+TODO
+----
+
+Cornerstone -> Elements

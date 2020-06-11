@@ -97,18 +97,17 @@ class DatasetController extends AbstractController
                     ->setIsPrimary(true)
                 ;
 
+                $em->persist($table);
+                $em->flush();
+
                 $table->setPrimaryKey($field);
 
-//                $em->persist($table);
+                $em->persist($field);
+                $em->flush();
 
-                dump($table);
-                dump($field);
-//                $em->persist($table);
-//                $em->flush();
+                $this->addFlash('success', 'Таблица добавлена.');
 
-//                $this->addFlash('success', 'Таблица добавлена.');
-
-//                return $this->redirectToRoute('cms_admin.dataset.show', ['dataset_slug' => $dataset->getSlug()]);
+                return $this->redirectToRoute('cms_admin.dataset.show', ['dataset_slug' => $dataset->getSlug()]);
             }
         }
 

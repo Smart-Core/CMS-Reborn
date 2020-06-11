@@ -35,29 +35,31 @@ class Field
     use ColumnTrait\User;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected bool $is_primary;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false, options={"default":0})
      */
     protected bool $is_nullable;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * Enum({"PRIMARY", "INDEX", "UNIQUE", "FULLTEXT"})
+     *
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
-    protected bool $is_unique;
+    protected ?string $index;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected ?string $default;
+    protected ?string $default_value;
 
     /**
      * @ORM\Column(type="string", length=190, nullable=true)
      */
     protected ?string $length;
+
+    /**
+     * @ORM\Column(type="string", length=190, nullable=true)
+     */
+    protected ?string $trait;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=false)
@@ -76,12 +78,11 @@ class Field
     public function __construct()
     {
         $this->created_at   = new \DateTime();
-        $this->default      = '';
+        $this->default_value = null;
         $this->description  = null;
         $this->name         = '';
-        $this->is_primary   = false;
+        $this->index        = null;
         $this->is_nullable  = false;
-        $this->is_unique    = false;
         $this->length       = null;
         $this->title        = '';
         $this->type         = 'string';
@@ -105,14 +106,14 @@ class Field
         return $this;
     }
 
-    public function isIsPrimary(): bool
+    public function getIndex(): ?string
     {
-        return $this->is_primary;
+        return $this->index;
     }
 
-    public function setIsPrimary(bool $is_primary): self
+    public function setIndex(?string $index): self
     {
-        $this->is_primary = $is_primary;
+        $this->index = $index;
 
         return $this;
     }
@@ -129,14 +130,14 @@ class Field
         return $this;
     }
 
-    public function isIsUnique(): bool
+    public function getTrait(): ?string
     {
-        return $this->is_unique;
+        return $this->trait;
     }
 
-    public function setIsUnique(bool $is_unique): self
+    public function setTrait(?string $trait): self
     {
-        $this->is_unique = $is_unique;
+        $this->trait = $trait;
 
         return $this;
     }
@@ -153,15 +154,14 @@ class Field
         return $this;
     }
 
-    public function getDefault(): ?string
+    public function getDefaultValue(): ?string
     {
-        return $this->default;
+        return $this->default_value;
     }
 
-
-    public function setDefault(?string $default): self
+    public function setDefaultValue(?string $default_value): self
     {
-        $this->default = $default;
+        $this->default_value = $default_value;
 
         return $this;
     }

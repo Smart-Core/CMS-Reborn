@@ -10,7 +10,10 @@
         <tr>
             <th>Заголовок поля</th>
             <th>Тип</th>
-            <th>Описание</th>
+            <th>Null</th>
+            <th>Индекс</th>
+            <th>По умолчанию</th>
+            <th>Комментарий</th>
             <th>Дата создания</th>
         </tr>
         </thead>
@@ -22,8 +25,23 @@
                         {{ e.title }}
                     </a>
                 </td>
-                <td><a href="{{ path('cms_admin.dataset.schema', {'id': e.id}) }}">{{ e.name }}</a></td>
-                <td>{{ e.description }}</td>
+                <td><a href="{{ path('cms_admin.dataset.schema', {'id': e.id}) }}">{{ e.type }}</a></td>
+                <td>{{ e.isNullable ? 'Да' : 'Нет' }}</td>
+                <td>
+                    {% if e.index is null %}
+                        <i>NULL</i>
+                    {% else %}
+                        {{ e.index }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if e.defaultValue is null %}
+                        <i>NULL</i>
+                    {% else %}
+                        {{ e.defaultValue }}
+                    {% endif %}
+                </td>
+                <td>{{ e.comment }}</td>
                 <td>{{ e.createdAt|date('Y-m-d H:i:s') }}</td>
             </tr>
         {% endfor %}
