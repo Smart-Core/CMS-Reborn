@@ -20,7 +20,7 @@ services:
         environment:
             APP_ENV: dev
             APP_DEBUG: 1
-            DATABASE_URL: 'pgsql://cms:1234@db:5432/cms?serverVersion=12.2'
+            DATABASE_URL: 'pgsql://cms:1234@db:5432/cms?serverVersion=12.3'
 #            DATABASE_URL: 'mysql://cms:1234@dbmysql:3306/cms?serverVersion=5.7'
 #            DATABASE_URL: 'mysql://cms:1234@dbmysql:3306/cms?serverVersion=mariadb-10.3.20'
 #        depends_on:

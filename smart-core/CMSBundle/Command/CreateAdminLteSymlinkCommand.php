@@ -43,16 +43,13 @@ class CreateAdminLteSymlinkCommand extends AbstractCommand
 
         $cmsPublicDir = $projectDir.'/smart-core/CMSBundle/Resources/public/assets/adminlte';
 
-        if (is_dir($cmsPublicDir)) {
-            $dirsToRemove = Finder::create()->depth(0)->directories()->in($cmsPublicDir);
-            $this->filesystem->remove($dirsToRemove);
+        if ( ! is_dir($cmsPublicDir)) {
+            $originDir = $projectDir.'/vendor/almasaeed2010/adminlte';
+
+            $method = $this->absoluteSymlinkWithFallback($originDir, $cmsPublicDir);
+
+            $this->io->text('vendor/almasaeed2010/adminlte -> CMSBundle/Resources/public/assets/adminlte : '.$method);
         }
-
-        $originDir = $projectDir.'/vendor/almasaeed2010/adminlte';
-
-        $method = $this->absoluteSymlinkWithFallback($originDir, $cmsPublicDir);
-
-        $this->io->text('vendor/almasaeed2010/adminlte -> CMSBundle/Resources/public/assets/adminlte : '.$method);
 
         return 0;
     }
