@@ -1,5 +1,5 @@
-up: docker-up db-schema-update # db-migrations
-upb: docker-build docker-up composer-install
+up: docker-up
+upb: docker-build docker-up composer-install db-schema-update # db-migrations
 down: docker-down
 build: docker-build composer-install
 restart: docker-down docker-up
