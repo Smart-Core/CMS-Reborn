@@ -35,7 +35,7 @@ services:
             POSTGRES_PASSWORD: 1234
             POSTGRES_DB: cms
         ports:
-            - 54399:5432
+            - 5444:5432
         volumes:
             - cms-db:/var/lib/postgresql/data
 #            - ./var/lib/postgresql/data:/var/lib/postgresql/data

@@ -84,8 +84,7 @@
             "sh bin/clear_cache": "script",
             "rm -rf public/bundles": "script",
             "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
-            "cms:adminlte:create-symlink": "symfony-cmd",
-            "security-checker security:check": "script"
+            "cms:adminlte:create-symlink": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

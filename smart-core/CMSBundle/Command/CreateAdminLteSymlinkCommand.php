@@ -43,13 +43,15 @@ class CreateAdminLteSymlinkCommand extends AbstractCommand
 
         $cmsPublicDir = $projectDir.'/smart-core/CMSBundle/Resources/public/assets/adminlte';
 
-        if ( ! is_dir($cmsPublicDir)) {
-            $originDir = $projectDir.'/vendor/almasaeed2010/adminlte';
-
-            $method = $this->absoluteSymlinkWithFallback($originDir, $cmsPublicDir);
-
-            $this->io->text('vendor/almasaeed2010/adminlte -> CMSBundle/Resources/public/assets/adminlte : '.$method);
+        if (is_dir($cmsPublicDir) or is_file($cmsPublicDir)) {
+            $this->filesystem->remove($cmsPublicDir);
         }
+
+        $originDir = $projectDir.'/vendor/almasaeed2010/adminlte';
+
+        $method = $this->absoluteSymlinkWithFallback($originDir, $cmsPublicDir);
+
+        $this->io->text('vendor/almasaeed2010/adminlte -> CMSBundle/Resources/public/assets/adminlte : '.$method);
 
         return 0;
     }
