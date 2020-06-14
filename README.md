@@ -1,5 +1,36 @@
-Установка
----------
+Запуск в Docker
+---------------
+
+Документация тут [docker.md](doc/docker.md) 
+
+Создание юзера
+--------------
+
+Посмотреть список всех пользователей:
+```
+bin/console user:list
+```
+
+Создание юзера:
+```    
+bin/console user:add
+```
+
+Назначить роль пользователю, например: ROLE_SUPER_ADMIN
+```
+bin/console user:role:promote <username> <role>
+```
+
+Для запуска команд в докере, нужно перед командой написать: `docker-compose run php` итого формат будет такой: 
+
+```
+docker-compose run --rm php <command>
+# например:
+docker-compose run --rm php bin/console user:list
+```
+
+Подключение CMS в проект
+------------------------
 
 Загрузка конфигов:
 

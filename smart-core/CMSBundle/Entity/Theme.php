@@ -9,16 +9,16 @@ use SmartCore\RadBundle\Doctrine\ColumnTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Данные тем оформления
- *
  * @ORM\Entity()
- * @ORM\Table(name="cms_themes_data")
+ * @ORM\Table(name="cms_themes")
+ *
+ * @UniqueEntity(fields="name")
  */
-class ThemeData
+class Theme
 {
     use ColumnTrait\Id;
+    use ColumnTrait\NameUniqueNotBlank;
     use ColumnTrait\CreatedAt;
-    use ColumnTrait\UpdatedAt;
     use ColumnTrait\User;
 
     public function __construct()

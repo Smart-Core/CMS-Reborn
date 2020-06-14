@@ -1,0 +1,3 @@
+FROM mariadb:10.4.12-bionic
+
+ENV MYSQL_ROOT_PASSWORD 1234

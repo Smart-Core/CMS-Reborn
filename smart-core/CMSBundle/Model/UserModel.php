@@ -75,7 +75,7 @@ abstract class UserModel implements UserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected \DateTimeInterface $last_login;
+    protected ?\DateTimeInterface $last_login;
 
     /**
      * @var UserGroup[]|Collection
