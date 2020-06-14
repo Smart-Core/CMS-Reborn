@@ -23,8 +23,8 @@ services:
             DATABASE_URL: 'pgsql://cms:1234@db:5432/cms?serverVersion=12.3'
 #            DATABASE_URL: 'mysql://cms:1234@dbmysql:3306/cms?serverVersion=5.7'
 #            DATABASE_URL: 'mysql://cms:1234@dbmysql:3306/cms?serverVersion=mariadb-10.3.20'
-#        depends_on:
-#            - dbmysql
+        depends_on:
+            - db
     db:
         build:
             context: ./.docker/development
@@ -39,6 +39,15 @@ services:
         volumes:
             - cms-db:/var/lib/postgresql/data
 #            - ./var/lib/postgresql/data:/var/lib/postgresql/data
+#    mailer:
+#        build:
+#            context: ./.docker/development
+#            dockerfile: mailhog.docker
+#        restart: unless-stopped
+#        ports:
+#            - "1025:1025"
+#            - "8085:8025"
+
 #    dbmysql:
 #        user: "1000:50"
 #        build:

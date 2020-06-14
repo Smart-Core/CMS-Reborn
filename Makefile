@@ -1,7 +1,7 @@
-up: docker-up composer-install db-schema-update # db-migrations
-upb: docker-build docker-up
+up: docker-up db-schema-update # db-migrations
+upb: docker-build docker-up composer-install
 down: docker-down
-build: docker-build
+build: docker-build composer-install
 restart: docker-down docker-up
 restart-build: docker-down docker-build docker-up
 init: docker-down-clear  docker-pull docker-build docker-up composer-install db-schema-drop db-schema-update # app-init
