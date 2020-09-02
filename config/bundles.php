@@ -18,8 +18,6 @@ return [
     SmartCore\Bundle\SettingsBundle\SmartSettingsBundle::class => ['all' => true],
     SmartCore\CMSBundle\CMSBundle::class => ['all' => true],
     Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
-    Oneup\FlysystemBundle\OneupFlysystemBundle::class => ['all' => true],
-    Cache\AdapterBundle\CacheAdapterBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle::class => ['all' => true],
 ];
